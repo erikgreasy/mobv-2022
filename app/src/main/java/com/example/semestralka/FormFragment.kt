@@ -26,7 +26,12 @@ class FormFragment : Fragment() {
         _binding = FragmentFormBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.button.setOnClickListener {
-            val action = FormFragmentDirections.actionFormFragmentToDrinkFragment()
+            val action = FormFragmentDirections.actionFormFragmentToDrinkFragment(
+                name = binding.nameInput.text.toString(),
+                barName = binding.barNameInput.text.toString(),
+                barLat = binding.barLatInput.text.toString(),
+                barLong = binding.barLongInput.text.toString()
+            )
 
             this.findNavController().navigate(action)
         }
