@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/formFragment">
+    app:startDestination="@id/barListFragment">
 
     <fragment
         android:id="@+id/drinkFragment"
@@ -31,5 +31,25 @@
         <action
             android:id="@+id/action_formFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barListFragment"
+        android:name="com.example.semestralka.BarListFragment"
+        android:label="fragment_bar_list"
+        tools:layout="@layout/fragment_bar_list" >
+        <action
+            android:id="@+id/action_barListFragment_to_barDetailFragment"
+            app:destination="@id/barDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barDetailFragment"
+        android:name="com.example.semestralka.BarDetailFragment"
+        android:label="fragment_bar_detail"
+        tools:layout="@layout/fragment_bar_detail" >
+        <argument android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="openning_hours"
+            app:argType="string" />
     </fragment>
 </navigation>
