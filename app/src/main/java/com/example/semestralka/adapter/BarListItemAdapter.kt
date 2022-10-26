@@ -15,7 +15,7 @@ import com.example.semestralka.model.Bar
 
 class BarListItemAdapter (
     private val context: Context,
-    private val dataset: List<Bar>
+    private var dataset: MutableList<Bar>
 ): RecyclerView.Adapter<BarListItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -54,5 +54,9 @@ class BarListItemAdapter (
      */
     override fun getItemCount(): Int {
         return dataset.size
+    }
+
+    fun setDataset(dataset: MutableList<Bar>) {
+        this.dataset = dataset
     }
 }
