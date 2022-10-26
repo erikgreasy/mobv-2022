@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.semestralka.databinding.FragmentBarDetailBinding
 
 /**
@@ -33,6 +35,12 @@ class BarDetailFragment : Fragment() {
         val view = binding.root
 
         binding.barName.text = barName.toString()
+
+        binding.deleteBtn.setOnClickListener {
+            val action = BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
+
+            findNavController().navigate(action)
+        }
 
         return view
         // Inflate the layout for this fragment
