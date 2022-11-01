@@ -44,7 +44,11 @@ class BarDetailFragment : Fragment() {
         binding.barName.text = barName.toString()
 
         binding.deleteBtn.setOnClickListener {
-            viewModel.deleteBar(barName.toString())
+            val bar = viewModel.findByName(barName)
+
+            if (bar != null) {
+                viewModel.deleteBar(bar)
+            }
             val action = BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
 
             findNavController().navigate(action)

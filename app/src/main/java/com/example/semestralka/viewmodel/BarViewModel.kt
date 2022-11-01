@@ -63,11 +63,19 @@ class BarViewModel: ViewModel() {
     }
 
     fun order() {
-//        _bars.sort()
+        bars.value = bars.value?.sortedWith(compareBy({it.name}))?.toMutableList()
     }
 
-    fun deleteBar(item: String) {
+    fun deleteBar(bar: Bar) {
+        bars.value?.remove(bar)
+
 //        _bars.remove(item)
+    }
+
+    fun findByName(name: String): Bar? {
+        return bars.value?.find {
+            it.name == name
+        }
     }
 
 
