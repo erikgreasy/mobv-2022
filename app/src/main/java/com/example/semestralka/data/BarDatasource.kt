@@ -10,7 +10,7 @@ class BarDatasource {
         val bar = Gson()
             .fromJson(inputStream.bufferedReader(), PubsData::class.java)
 
-        val pubs = bar.elements
+        val pubs = bar.documents
         val bars = mutableListOf<Bar>()
 
         pubs?.forEach {

@@ -1,28 +1,78 @@
 package com.example.semestralka.viewmodel
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.semestralka.ApiInterface
+import com.example.semestralka.BASE_URL
+import com.example.semestralka.R
+import com.example.semestralka.Request
+import com.example.semestralka.data.BarDatasource
+import com.example.semestralka.data.PubsData
+import com.example.semestralka.model.Bar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class BarViewModel: ViewModel() {
-    private lateinit var _bars: MutableList<String>
-    val bars: List<String> get() = _bars
+    val bars =  MutableLiveData<MutableList<Bar>>()
 
     init {
         loadBars()
     }
 
     private fun loadBars() {
-        val listOfBars = mutableListOf<String>("1 bar", "3 bar", "2 bar")
+        val retrofitBuilder = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .build()
+            .create(ApiInterface::class.java)
 
-        _bars = listOfBars
+        val retrofitData = retrofitBuilder.getData(Request())
+
+        retrofitData.enqueue(object : Callback<PubsData?> {
+            override fun onResponse(call: Call<PubsData?>, response: Response<PubsData?>) {
+                val responseBody = response.body()
+
+                val fetchedBars = mutableListOf<Bar>()
+
+                Log.e("TEST", responseBody.toString())
+
+                responseBody?.documents?.forEach {
+                    fetchedBars.add(
+                        Bar(
+                            it.tags.name
+                        )
+                    )
+                }
+                bars.value = fetchedBars
+                Log.e("TEST", bars.toString())
+            }
+
+            override fun onFailure(call: Call<PubsData?>, t: Throwable) {
+
+            }
+        })
+//        val listOfBars =
+
+//        _bars = listOfBars
     }
 
     fun order() {
-        _bars.sort()
+//        _bars.sort()
     }
 
     fun deleteBar(item: String) {
-        _bars.remove(item)
+//        _bars.remove(item)
+    }
+
+
+    private fun getMyData() {
+
     }
 }
 

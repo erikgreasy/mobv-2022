@@ -5,6 +5,6 @@ data class Pub(
     val id : String? = null,
     val lat : String?,
     val lon : String? = null,
-    val tags : Tags? = null
+    val tags : Tags
 ) {
 }
