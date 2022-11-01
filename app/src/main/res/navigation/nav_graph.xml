@@ -48,9 +48,6 @@
         tools:layout="@layout/fragment_bar_detail" >
         <argument android:name="name"
             app:argType="string" />
-        <argument
-            android:name="openning_hours"
-            app:argType="string" />
         <action
             android:id="@+id/action_barDetailFragment_to_barListFragment"
             app:destination="@id/barListFragment" />

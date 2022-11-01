@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.semestralka.BarListFragmentDirections
 import com.example.semestralka.R
 import com.example.semestralka.model.Bar
+import com.example.semestralka.viewmodel.BarViewModel
 
 class BarListItemAdapter (
     private val context: Context,
-    private var dataset: MutableList<Bar>
+    private var dataset: List<String>
 ): RecyclerView.Adapter<BarListItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -37,12 +39,10 @@ class BarListItemAdapter (
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.textView.text = item.name
-
+        holder.textView.text = item
         holder.textView.setOnClickListener {
             val action = BarListFragmentDirections.actionBarListFragmentToBarDetailFragment(
-                name = item.name,
-                openningHours = item.openningHours
+                name = item
             )
 
             holder.view.findNavController().navigate(action)
@@ -54,9 +54,5 @@ class BarListItemAdapter (
      */
     override fun getItemCount(): Int {
         return dataset.size
-    }
-
-    fun setDataset(dataset: MutableList<Bar>) {
-        this.dataset = dataset
     }
 }
