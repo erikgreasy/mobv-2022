@@ -43,11 +43,13 @@ class BarViewModel: ViewModel() {
                 Log.e("TEST", responseBody.toString())
 
                 responseBody?.documents?.forEach {
-                    fetchedBars.add(
-                        Bar(
-                            it.tags.name
+                    if (it.tags.name != "") {
+                        fetchedBars.add(
+                            Bar(
+                                it.tags.name
+                            )
                         )
-                    )
+                    }
                 }
                 bars.value = fetchedBars
                 Log.e("TEST", bars.toString())
