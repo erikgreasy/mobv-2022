@@ -29,7 +29,9 @@ const val BASE_URL = "https://data.mongodb-api.com/app/data-fswjp/endpoint/data/
 class BarListFragment : Fragment() {
 
     private val viewModel: BarViewModel by activityViewModels {
-        BarViewModelFactory()
+        BarViewModelFactory(
+            (activity?.application as BarApplication).database.barDao()
+        )
     }
 
     private var _binding: FragmentBarListBinding? = null
@@ -46,7 +48,7 @@ class BarListFragment : Fragment() {
         val adapter = BarListItemAdapter(
             viewModel,
         {
-            val action =   BarListFragmentDirections.actionBarListFragmentToBarDetailFragment(it.name)
+            val action =   BarListFragmentDirections.actionBarListFragmentToBarDetailFragment(it.id)
             this.findNavController().navigate(action)
          },
 
@@ -54,7 +56,7 @@ class BarListFragment : Fragment() {
         recyclerView.adapter = adapter
 
         binding.orderBtn.setOnClickListener {
-            viewModel.order()
+//            viewModel.order()
 //            adapter.notifyDataSetChanged()
         }
 

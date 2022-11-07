@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.api
 
 class Request(
     val collection: String = "bars",

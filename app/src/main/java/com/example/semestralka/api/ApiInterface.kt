@@ -1,10 +1,9 @@
-package com.example.semestralka
+package com.example.semestralka.api
 
-import com.example.semestralka.data.DataItem
+import com.example.semestralka.api.Request
 import com.example.semestralka.data.PubsData
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 

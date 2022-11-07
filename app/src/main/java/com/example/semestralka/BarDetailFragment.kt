@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.FragmentBarDetailBinding
 import com.example.semestralka.viewmodel.BarViewModel
 import com.example.semestralka.viewmodel.BarViewModelFactory
@@ -19,19 +21,37 @@ import com.example.semestralka.viewmodel.BarViewModelFactory
  * create an instance of this fragment.
  */
 class BarDetailFragment : Fragment() {
-    private var _binding: FragmentBarDetailBinding? = null
-    private val binding get() = _binding!!
-    private var barName: String = ""
+    private val navigationArgs: BarDetailFragmentArgs by navArgs()
+    lateinit var bar: Bar
+//    private var barName: String = ""
+
     private val viewModel: BarViewModel by activityViewModels {
-        BarViewModelFactory()
+        BarViewModelFactory(
+            (activity?.application as BarApplication).database.barDao()
+        )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var _binding: FragmentBarDetailBinding? = null
+    private val binding get() = _binding!!
 
-        arguments?.let {
-            barName = it.getString("name").toString()
+
+    private fun bind(bar: Bar) {
+        binding.apply {
+            barName.text = bar.name
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val barId = navigationArgs.id
+
+        viewModel.retrieveItem(barId).observe(this.viewLifecycleOwner) { selectedBar ->
+            bar = selectedBar
+            bind(bar)
+        }
+
+
     }
 
     override fun onCreateView(
@@ -39,23 +59,6 @@ class BarDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentBarDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-
-        binding.barName.text = barName.toString()
-
-        binding.deleteBtn.setOnClickListener {
-            val bar = viewModel.findByName(barName)
-
-            if (bar != null) {
-                viewModel.deleteBar(bar)
-            }
-            val action = BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
-
-            findNavController().navigate(action)
-        }
-
-        return view
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_bar_detail, container, false)
+        return binding.root
     }
 }

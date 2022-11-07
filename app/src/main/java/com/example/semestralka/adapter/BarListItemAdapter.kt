@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.semestralka.BarListFragmentDirections
 import com.example.semestralka.R
+import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
-import com.example.semestralka.model.Bar
 import com.example.semestralka.viewmodel.BarViewModel
 
 class BarListItemAdapter (

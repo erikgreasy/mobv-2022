@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Bar::class], version = 1, exportSchema = false)
 abstract class BarDatabase: RoomDatabase() {
     abstract fun barDao(): BarDao
+//    abstract val barDao: BarDao
 
     companion object {
         @Volatile
