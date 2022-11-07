@@ -38,6 +38,13 @@ class BarDetailFragment : Fragment() {
     private fun bind(bar: Bar) {
         binding.apply {
             barName.text = bar.name
+
+            deleteBtn.setOnClickListener {
+                viewModel.deleteBar(bar)
+
+                val action =   BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 

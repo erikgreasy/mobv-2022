@@ -24,11 +24,15 @@ class BarViewModel(private val barDao: BarDao): ViewModel() {
             barDao.insertAll(listOf(
                 Bar(
                     123,
-                    "super bar"
+                    "super bar 2"
                 ),
                 Bar(
                     1233,
-                    "super bar 2"
+                    "super bar 3"
+                ),
+                Bar(
+                    1234,
+                    "super bar 1"
                 )
             ))
         }
@@ -86,9 +90,6 @@ class BarViewModel(private val barDao: BarDao): ViewModel() {
         viewModelScope.launch {
             barDao.delete(bar)
         }
-//        bars.value?.remove(bar)
-
-//        _bars.remove(item)
     }
 
 //    fun findByName(name: String): Bar? {
