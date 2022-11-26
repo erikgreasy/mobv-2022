@@ -1,13 +1,20 @@
 package com.example.semestralka
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.semestralka.databinding.FragmentBarDetailBinding
+import androidx.navigation.fragment.findNavController
+import com.example.semestralka.api.RetrofitInstance
+import com.example.semestralka.api.UserRequest
+import com.example.semestralka.api.UserResponse
 import com.example.semestralka.databinding.FragmentLoginBinding
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -29,9 +36,37 @@ class LoginFragment : Fragment() {
             it.findNavController().navigate(R.id.action_register)
         }
 
+        binding.submitButton.setOnClickListener {
+            lifecycleScope.launch {
+                binding.progressBar.isVisible = true
+
+                val username = binding.usernameInput.text.toString()
+                val password = binding.passwordInput.text.toString()
+
+                val response = RetrofitInstance.api.login(UserRequest(username, password))
+
+                Log.e("GREASY", response.toString())
+                Log.e("GREASY", response.body().toString())
+
+                if(response.isSuccessful) {
+                    val responseBody = response.body()
+                    Log.e("GREASY", responseBody?.uid.toString())
+
+                    // user entered correct credentials
+                    if(didUserAuthenticate(responseBody!!)) {
+                        findNavController().navigate(R.id.action_bar_list)
+                    }
+                }
+
+                binding.progressBar.isVisible = false
+            }
+        }
+
         return binding.root
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_login, container, false)
+    }
+
+    private fun didUserAuthenticate(responseBody: UserResponse): Boolean {
+        return responseBody?.uid.toString() != "-1"
     }
 
 }
