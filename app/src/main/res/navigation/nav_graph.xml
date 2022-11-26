@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/barListFragment">
 
     <fragment
         android:id="@+id/drinkFragment"
@@ -57,4 +57,14 @@
         android:name="com.example.semestralka.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.semestralka.RegisterFragment"
+        android:label="RegisterFragment" />
+    <action
+        android:id="@+id/action_login"
+        app:destination="@id/loginFragment" />
+    <action
+        android:id="@+id/action_register"
+        app:destination="@id/registerFragment" />
 </navigation>

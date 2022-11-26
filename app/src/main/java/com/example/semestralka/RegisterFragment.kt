@@ -6,32 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.semestralka.databinding.FragmentBarDetailBinding
 import com.example.semestralka.databinding.FragmentLoginBinding
+import com.example.semestralka.databinding.FragmentRegisterBinding
 
-class LoginFragment : Fragment() {
-    private var _binding: FragmentLoginBinding? = null
+class RegisterFragment : Fragment() {
+    private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        binding.registerLink.setOnClickListener {
-            it.findNavController().navigate(R.id.action_register)
+        binding.loginLink.setOnClickListener {
+            it.findNavController().navigate(R.id.action_login)
         }
-
-        return binding.root
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_login, container, false)
+        return binding.root
     }
 
 }
