@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.adapter.BarListItemAdapter
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.databinding.FragmentBarListBinding
+import com.example.semestralka.viewmodel.AuthViewModel
+import com.example.semestralka.viewmodel.AuthViewModelFactory
 import com.example.semestralka.viewmodel.BarViewModel
 import com.example.semestralka.viewmodel.BarViewModelFactory
 import kotlinx.coroutines.launch
@@ -36,6 +38,9 @@ class BarListFragment : Fragment() {
 
     private var _binding: FragmentBarListBinding? = null
     private val binding get() = _binding!!
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +53,10 @@ class BarListFragment : Fragment() {
         lifecycleScope.launch {
             binding.progressBar.isVisible = true
 
-            val response = RetrofitInstance.api.getActiveBars()
+            val response = RetrofitInstance.api.getActiveBars(
+                authViewModel.loggedUser.value?.uid!!,
+                "Bearer " + authViewModel.loggedUser.value?.access!!
+            )
 
             Log.e("GREASY", response.toString())
 
