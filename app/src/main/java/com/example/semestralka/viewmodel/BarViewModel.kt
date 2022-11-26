@@ -1,20 +1,23 @@
 package com.example.semestralka.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.example.semestralka.data.Bar
 import com.example.semestralka.data.BarDao
+import com.example.semestralka.data.BarDatabase
+import com.example.semestralka.repository.BarRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BarViewModel(private val barDao: BarDao): ViewModel() {
+class BarViewModel(private val barDao: BarDao, application: Application): ViewModel() {
 //    val bars = MutableLiveData<MutableList<Bar>>()
     val bars: LiveData<List<Bar>> = barDao.getBars().asLiveData()
 
     init {
         viewModelScope.launch {
-            addBars()
-
+//            addBars()
+                BarRepository(BarDatabase.getDatabase(application)).refreshBars()
         }
 
     }
@@ -38,7 +41,7 @@ class BarViewModel(private val barDao: BarDao): ViewModel() {
         }
     }
 
-    fun retrieveItem(id: Int): LiveData<Bar> {
+    fun retrieveItem(id: Long): LiveData<Bar> {
         return barDao.getBar(id).asLiveData()
     }
 
@@ -104,11 +107,11 @@ class BarViewModel(private val barDao: BarDao): ViewModel() {
     }
 }
 
-class BarViewModelFactory(private val barDao: BarDao) : ViewModelProvider.Factory {
+class BarViewModelFactory(private val barDao: BarDao, private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BarViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return BarViewModel(barDao) as T
+            return BarViewModel(barDao, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

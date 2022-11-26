@@ -27,7 +27,8 @@ class BarDetailFragment : Fragment() {
 
     private val viewModel: BarViewModel by activityViewModels {
         BarViewModelFactory(
-            (activity?.application as BarApplication).database.barDao()
+            (activity?.application as BarApplication).database.barDao(),
+            (activity?.application as BarApplication)
         )
     }
 
