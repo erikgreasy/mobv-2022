@@ -9,73 +9,56 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.semestralka.BarListFragmentDirections
 import com.example.semestralka.R
 import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.viewmodel.BarViewModel
 
-class BarListItemAdapter (
-    model: BarViewModel,
-    private val onItemClicked: (Bar) -> Unit
-): ListAdapter<Bar, BarListItemAdapter.ItemViewHolder>(DiffCallback) {
+class BarListItemAdapter : RecyclerView.Adapter<BarListItemAdapter.BarListViewHolder>() {
 
-    private val viewModel = model
+    inner class BarListViewHolder(val binding: BarListItemBinding) : ViewHolder(binding.root)
 
-    class ItemViewHolder(private var binding: BarListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val textView: TextView = view.findViewById(R.id.bar_list_item_name)
-
-        fun bind(bar: Bar) {
-            binding.apply {
-                barListItemName.text = bar.name
-            }
+    private val diffCallback = object : DiffUtil.ItemCallback<com.example.semestralka.api.Bar>() {
+        override fun areItemsTheSame(
+            oldItem: com.example.semestralka.api.Bar,
+            newItem: com.example.semestralka.api.Bar
+        ): Boolean {
+            return oldItem.bar_id == newItem.bar_id
         }
-
-    }
-
-    /**
-     * Create new views (invoked by the layout manager)
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(
-            BarListItemBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
-            )
-        )
-    }
-
-    /**
-     * Replace the contents of a view (invoked by the layout manager)
-     */
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.itemView.setOnClickListener {
-            onItemClicked(current)
+        override fun areContentsTheSame(
+            oldItem: com.example.semestralka.api.Bar,
+            newItem: com.example.semestralka.api.Bar
+        ): Boolean {
+            return oldItem == newItem
         }
-        holder.bind(current)
     }
 
-    /**
-     * Return the size of your dataset (invoked by the layout manager)
-     */
-    override fun getItemCount(): Int {
-        return viewModel.bars.value?.size ?: 0
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    var bars: List<com.example.semestralka.api.Bar>
+        get() = differ.currentList
+        set(value) { differ.submitList(value) }
+
+    override fun getItemCount() = bars.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BarListViewHolder {
+        return BarListViewHolder(BarListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        ))
     }
 
-    companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Bar>() {
-            override fun areItemsTheSame(oldItem: Bar, newItem: Bar): Boolean {
-                return oldItem === newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Bar, newItem: Bar): Boolean {
-                return oldItem.name == newItem.name
-            }
+    override fun onBindViewHolder(holder: BarListViewHolder, position: Int) {
+        holder.binding.apply {
+            val bar = bars[position]
+            barListItemName.text = bar.bar_name
         }
     }
 }
