@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="V okolí"
+        android:title="Aktuálne podniky"
         android:id="@+id/barListFragment"
+        android:icon="@drawable/ic_baseline_star_24"
         />
     <item
         android:title="Priatelia"
         android:id="@+id/friendsFragment"
+        android:icon="@drawable/ic_baseline_people_24"
         />
     <item
-        android:title="Profile"
-        android:id="@+id/profile"
+        android:title="V okolí"
+        android:id="@+id/nearListFragment"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        />
+    <item
+        android:title="Logout"
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_baseline_logout_24"
         />
 </menu>
