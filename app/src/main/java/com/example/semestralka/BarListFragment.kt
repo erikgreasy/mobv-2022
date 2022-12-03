@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -27,12 +28,12 @@ const val BASE_URL = "https://data.mongodb-api.com/app/data-fswjp/endpoint/data/
 
 class BarListFragment : Fragment() {
 
-//    private val viewModel: BarViewModel by activityViewModels {
-//        BarViewModelFactory(
-//            (activity?.application as BarApplication).database.barDao(),
-//            (activity?.application as BarApplication)
-//        )
-//    }
+    private val barViewModel: BarViewModel by activityViewModels {
+        BarViewModelFactory(
+            authViewModel,
+            (activity?.application as BarApplication)
+        )
+    }
 
     private lateinit var barListItemAdapter: BarListItemAdapter
 
@@ -50,22 +51,28 @@ class BarListFragment : Fragment() {
 
         setupRecyclerView()
 
-        lifecycleScope.launch {
-            binding.progressBar.isVisible = true
 
-            val response = RetrofitInstance.api.getActiveBars(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!
-            )
+        barListItemAdapter.bars = barViewModel.bars.value!!
 
-            Log.e("GREASY", response.toString())
-
-            if(response.isSuccessful) {
-                barListItemAdapter.bars = response.body()!!
-            }
-
-            binding.progressBar.isVisible = false
-        }
+        barViewModel.bars.observe(viewLifecycleOwner, Observer {
+            barListItemAdapter.bars = it
+        })
+//        lifecycleScope.launch {
+//            binding.progressBar.isVisible = true
+//
+//            val response = RetrofitInstance.api.getActiveBars(
+//                authViewModel.loggedUser.value?.uid!!,
+//                "Bearer " + authViewModel.loggedUser.value?.access!!
+//            )
+//
+//            Log.e("GREASY", response.toString())
+//
+//            if(response.isSuccessful) {
+//                barListItemAdapter.bars = response.body()!!
+//            }
+//
+//            binding.progressBar.isVisible = false
+//        }
 
 
         return binding.root

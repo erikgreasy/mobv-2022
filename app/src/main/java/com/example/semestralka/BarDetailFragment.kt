@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.semestralka.data.Bar
+import com.example.semestralka.api.Bar
 import com.example.semestralka.databinding.FragmentBarDetailBinding
+import com.example.semestralka.viewmodel.AuthViewModel
+import com.example.semestralka.viewmodel.AuthViewModelFactory
 import com.example.semestralka.viewmodel.BarViewModel
 import com.example.semestralka.viewmodel.BarViewModelFactory
 
@@ -25,11 +27,15 @@ class BarDetailFragment : Fragment() {
     lateinit var bar: Bar
 //    private var barName: String = ""
 
-    private val viewModel: BarViewModel by activityViewModels {
+    private val barViewModel: BarViewModel by activityViewModels {
         BarViewModelFactory(
-            (activity?.application as BarApplication).database.barDao(),
+            authViewModel,
             (activity?.application as BarApplication)
         )
+    }
+
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory()
     }
 
     private var _binding: FragmentBarDetailBinding? = null
@@ -38,13 +44,12 @@ class BarDetailFragment : Fragment() {
 
     private fun bind(bar: Bar) {
         binding.apply {
-            barName.text = bar.name
+            barName.text = bar.bar_name
 
             deleteBtn.setOnClickListener {
-                viewModel.deleteBar(bar)
-
-                val action =   BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
-                findNavController().navigate(action)
+//
+//                val action =   BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
+//                findNavController().navigate(action)
             }
         }
     }
@@ -54,11 +59,11 @@ class BarDetailFragment : Fragment() {
 
         val barId = navigationArgs.id
 
-        viewModel.retrieveItem(barId).observe(this.viewLifecycleOwner) { selectedBar ->
-            bar = selectedBar
+        val bar = barViewModel.getBar(barId)
+
+        if(bar != null) {
             bind(bar)
         }
-
 
     }
 

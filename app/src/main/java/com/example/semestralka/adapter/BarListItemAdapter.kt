@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.semestralka.BarDetailFragmentDirections
 import com.example.semestralka.BarListFragmentDirections
 import com.example.semestralka.R
 import com.example.semestralka.data.Bar
@@ -59,6 +60,11 @@ class BarListItemAdapter : RecyclerView.Adapter<BarListItemAdapter.BarListViewHo
         holder.binding.apply {
             val bar = bars[position]
             barListItemName.text = bar.bar_name
+        }
+
+        holder.binding.barListItemName.setOnClickListener {
+            val action = BarDetailFragmentDirections.actionBarDetail(bars[position].bar_id)
+            holder.itemView.findNavController().navigate(action)
         }
     }
 }

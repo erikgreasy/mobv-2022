@@ -36,21 +36,14 @@
         android:id="@+id/barListFragment"
         android:name="com.example.semestralka.BarListFragment"
         android:label="fragment_bar_list"
-        tools:layout="@layout/fragment_bar_list" >
-        <action
-            android:id="@+id/action_barListFragment_to_barDetailFragment"
-            app:destination="@id/barDetailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_bar_list" />
     <fragment
         android:id="@+id/barDetailFragment"
         android:name="com.example.semestralka.BarDetailFragment"
         android:label="fragment_bar_detail"
         tools:layout="@layout/fragment_bar_detail" >
         <argument android:name="id"
-            app:argType="long" />
-        <action
-            android:id="@+id/action_barDetailFragment_to_barListFragment"
-            app:destination="@id/barListFragment" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -70,4 +63,7 @@
     <action
         android:id="@+id/action_bar_list"
         app:destination="@id/barListFragment" />
+    <action
+        android:id="@+id/action_bar_detail"
+        app:destination="@id/barDetailFragment" />
 </navigation>
