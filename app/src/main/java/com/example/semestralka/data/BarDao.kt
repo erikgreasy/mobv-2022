@@ -15,7 +15,7 @@ interface BarDao {
     suspend fun insert(bar: Bar)
 
     @Query("SELECT * from bar WHERE id = :id")
-    fun getBar(id: Long): Flow<Bar>
+    fun getBar(id: String): Flow<Bar>
 
     @Query("SELECT * FROM bar")
     fun getBars(): Flow<List<Bar>>

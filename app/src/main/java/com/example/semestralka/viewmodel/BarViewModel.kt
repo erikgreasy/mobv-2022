@@ -1,7 +1,10 @@
 package com.example.semestralka.viewmodel
 
 import android.app.Application
+import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
+import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.data.Bar
 import com.example.semestralka.data.BarDao
 import com.example.semestralka.data.BarDatabase
@@ -10,41 +13,41 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BarViewModel(private val barDao: BarDao, application: Application): ViewModel() {
+class BarViewModel(authViewModel: AuthViewModel, application: Application): ViewModel() {
 //    val bars = MutableLiveData<MutableList<Bar>>()
-    val bars: LiveData<List<Bar>> = barDao.getBars().asLiveData()
+    val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
+
 
     init {
+        loadBars(authViewModel)
+    }
+
+    fun loadBars(authViewModel: AuthViewModel) {
         viewModelScope.launch {
-//            addBars()
-                BarRepository(BarDatabase.getDatabase(application)).refreshBars()
-        }
+            val response = RetrofitInstance.api.getActiveBars(
+                authViewModel.loggedUser.value?.uid!!,
+                "Bearer " + authViewModel.loggedUser.value?.access!!
+            )
 
-    }
+            Log.e("GREASY", response.toString())
 
-    suspend fun addBars() {
-        withContext(Dispatchers.IO) {
-            barDao.insertAll(listOf(
-                Bar(
-                    123,
-                    "super bar 2"
-                ),
-                Bar(
-                    1233,
-                    "super bar 3"
-                ),
-                Bar(
-                    1234,
-                    "super bar 1"
-                )
-            ))
+            if(response.isSuccessful) {
+                bars.value = response.body()!!
+            }
         }
     }
 
-    fun retrieveItem(id: Long): LiveData<Bar> {
-        return barDao.getBar(id).asLiveData()
-    }
+    fun getBar(id: String): com.example.semestralka.api.Bar? {
+        val filteredBars = this.bars.value?.filter {
+            id == it.bar_id
+        }
 
+        if(!filteredBars!!.isEmpty()) {
+            return filteredBars[0]
+        }
+
+        return null
+    }
 
 //    private fun loadBars() {
 //        val retrofitBuilder = Retrofit.Builder()
@@ -88,14 +91,6 @@ class BarViewModel(private val barDao: BarDao, application: Application): ViewMo
 //    fun order() {
 //        bars.value = bars.value?.sortedWith(compareBy({it.name}))?.toMutableList()
 //    }
-
-    fun deleteBar(bar: Bar) {
-        viewModelScope.launch {
-            barDao.delete(bar)
-        }
-    }
-
-//    fun findByName(name: String): Bar? {
 //        return bars.value?.find {
 //            it.name == name
 //        }
@@ -107,11 +102,11 @@ class BarViewModel(private val barDao: BarDao, application: Application): ViewMo
     }
 }
 
-class BarViewModelFactory(private val barDao: BarDao, private val application: Application) : ViewModelProvider.Factory {
+class BarViewModelFactory(private val authViewModel: AuthViewModel, private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BarViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return BarViewModel(barDao, application) as T
+            return BarViewModel(authViewModel, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
