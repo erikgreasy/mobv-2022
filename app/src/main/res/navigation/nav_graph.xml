@@ -74,4 +74,9 @@
     <action
         android:id="@+id/action_friends"
         app:destination="@id/friendsFragment" />
+    <fragment
+        android:id="@+id/nearBarsListFragment"
+        android:name="com.example.semestralka.NearBarsList"
+        android:label="fragment_near_bars_list"
+        tools:layout="@layout/fragment_near_bars_list" />
 </navigation>

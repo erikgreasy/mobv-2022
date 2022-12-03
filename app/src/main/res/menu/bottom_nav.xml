@@ -12,7 +12,7 @@
         />
     <item
         android:title="V okolí"
-        android:id="@+id/nearListFragment"
+        android:id="@+id/nearBarsListFragment"
         android:icon="@drawable/ic_baseline_location_on_24"
         />
     <item
