@@ -60,6 +60,7 @@ class BarListItemAdapter : RecyclerView.Adapter<BarListItemAdapter.BarListViewHo
         holder.binding.apply {
             val bar = bars[position]
             barListItemName.text = bar.bar_name
+            barListItemUsersCount.text = bar.users
         }
 
         holder.binding.barListItemName.setOnClickListener {

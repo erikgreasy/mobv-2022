@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel: ViewModel() {
     val loggedUser = MutableLiveData<UserResponse>(null)
+    val isLoggedIn = MutableLiveData<Boolean>(false)
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
@@ -30,6 +31,7 @@ class AuthViewModel: ViewModel() {
 
                 if(didUserAuthenticate(responseBody!!)) {
                     loggedUser.value = responseBody!!
+                    isLoggedIn.value = true
                 }
             }
 

@@ -66,4 +66,12 @@
     <action
         android:id="@+id/action_bar_detail"
         app:destination="@id/barDetailFragment" />
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.semestralka.FriendsFragment"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" />
+    <action
+        android:id="@+id/action_friends"
+        app:destination="@id/friendsFragment" />
 </navigation>

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.api.UserRequest
 import com.example.semestralka.api.UserResponse
+import com.example.semestralka.databinding.ActivityMainBinding
 import com.example.semestralka.databinding.FragmentLoginBinding
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
