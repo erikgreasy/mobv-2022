@@ -62,17 +62,4 @@ class LoginFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        authViewModel.loggedUser.observe(viewLifecycleOwner, { newUser ->
-            if(newUser != null) {
-                findNavController().navigate(R.id.action_bar_list)
-            }
-        })
-    }
-
-
-
 }

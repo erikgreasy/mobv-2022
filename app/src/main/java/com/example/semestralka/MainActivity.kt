@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -45,6 +46,12 @@ class MainActivity : AppCompatActivity() {
         authViewModel.isLoggedIn.observe(this, Observer {
             if(it) {
                 binding.bottonnav.isVisible = true
+
+                authViewModel.loggedUser.observe(this, { newUser ->
+                    if(newUser != null) {
+                        navController.navigate(R.id.action_bar_list)
+                    }
+                })
             }
         })
 
