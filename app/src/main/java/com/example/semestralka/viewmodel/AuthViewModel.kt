@@ -16,7 +16,7 @@ import com.example.semestralka.service.PasswordHasher
 import kotlinx.coroutines.launch
 
 class AuthViewModel: ViewModel() {
-    val loggedUser = MutableLiveData<UserResponse>(null)
+    val loggedUser = MutableLiveData<UserResponse?>(null)
     val isLoggedIn = MutableLiveData<Boolean>(false)
     val passwordHasher = PasswordHasher()
 
@@ -59,6 +59,11 @@ class AuthViewModel: ViewModel() {
                 }
             }
         }
+    }
+
+    fun logout() {
+        loggedUser.value = null
+        isLoggedIn.value = false
     }
 
     private fun didUserAuthenticate(responseBody: UserResponse): Boolean {

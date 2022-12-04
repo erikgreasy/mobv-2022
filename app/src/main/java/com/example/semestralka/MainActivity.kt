@@ -3,6 +3,8 @@ package com.example.semestralka
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -19,6 +21,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.semestralka.databinding.ActivityMainBinding
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -46,14 +49,32 @@ class MainActivity : AppCompatActivity() {
         authViewModel.isLoggedIn.observe(this, Observer {
             if(it) {
                 binding.bottonnav.isVisible = true
-
-                authViewModel.loggedUser.observe(this, { newUser ->
-                    if(newUser != null) {
-                        navController.navigate(R.id.action_bar_list)
-                    }
-                })
+                navController.navigate(R.id.action_bar_list)
+            } else {
+                binding.bottonnav.isVisible = false
+                navController.navigate(R.id.loginFragment)
             }
         })
+
+        val logoutBtn: BottomNavigationItemView = findViewById(R.id.logout)
+
+        logoutBtn.setOnClickListener {
+            authViewModel.logout()
+        }
+
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            Log.e("GREASY", "navigation")
+//            Log.e("GREASY", destination.id.toString())
+//            Log.e("GREASY", R.id.loginFragment.toString())
+//
+//            // check if trying to access non auth views without being logged in
+//            if(
+//                authViewModel.isLoggedIn.value == false && destination.id != R.id.loginFragment
+//            ) {
+//                navController.navigate(R.id.action_login)
+//                false
+//            }
+//        }
 
         setupActionBarWithNavController(navController)
     }
