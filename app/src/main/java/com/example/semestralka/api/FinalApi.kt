@@ -36,4 +36,16 @@ interface FinalApi {
         @Body
         userData: UserRequest
     ): Response<UserResponse>
+
+    @GET("contact/list.php")
+    @Headers(
+        "x-apikey: c95332ee022df8c953ce470261efc695ecf3e784",
+    )
+    suspend fun getFriends(
+        @Header("x-user")
+        user: String,
+
+        @Header("authorization")
+        token: String
+    ): Response<List<User>>
 }
