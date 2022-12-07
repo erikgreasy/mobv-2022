@@ -40,9 +40,6 @@ class FriendsFragment : Fragment() {
 
         setupRecyclerView()
 
-        friendViewModel.loadFriends(authViewModel)
-
-
         friendItemAdapter.friends = friendViewModel.friends.value!!
 
         friendViewModel.friends.observe(viewLifecycleOwner, Observer {

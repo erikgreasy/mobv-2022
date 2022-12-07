@@ -3,20 +3,20 @@ package com.example.semestralka.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.semestralka.api.AddFriendRequest
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.api.User
 import kotlinx.coroutines.launch
 
-class FriendViewModel(authViewModel: AuthViewModel, application: Application): ViewModel() {
+class FriendViewModel(val authViewModel: AuthViewModel, application: Application): ViewModel() {
 //    val bars = MutableLiveData<MutableList<Bar>>()
     val friends = MutableLiveData<List<User>>(listOf())
 
-
     init {
-        loadFriends(authViewModel)
+        loadFriends()
     }
 
-    fun loadFriends(authViewModel: AuthViewModel) {
+    fun loadFriends() {
         Log.e("FRINED VIEW MODEL", "LOADING FRIENDS")
 
         viewModelScope.launch {
@@ -29,6 +29,24 @@ class FriendViewModel(authViewModel: AuthViewModel, application: Application): V
 
             if(response.isSuccessful) {
                 friends.value = response.body()!!
+            }
+
+            Log.e("FRIEND VIEW MODEL", friends.value.toString())
+        }
+    }
+
+    fun addFriend(friendUsername: String) {
+        viewModelScope.launch {
+            val response = RetrofitInstance.api.addFriend(
+                authViewModel.loggedUser.value?.uid!!,
+                "Bearer " + authViewModel.loggedUser.value?.access!!,
+                AddFriendRequest(friendUsername)
+            )
+
+            Log.e("GREASY", response.toString())
+
+            if(response.isSuccessful) {
+                // lets go
             }
 
             Log.e("FRIEND VIEW MODEL", friends.value.toString())

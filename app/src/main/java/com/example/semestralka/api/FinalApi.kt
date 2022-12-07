@@ -48,4 +48,19 @@ interface FinalApi {
         @Header("authorization")
         token: String
     ): Response<List<User>>
+
+    @POST("contact/message.php")
+    @Headers(
+        "x-apikey: c95332ee022df8c953ce470261efc695ecf3e784",
+    )
+    suspend fun addFriend(
+        @Header("x-user")
+        user: String,
+
+        @Header("authorization")
+        token: String,
+
+        @Body
+        friendData: AddFriendRequest
+    ): Response<Void>
 }
