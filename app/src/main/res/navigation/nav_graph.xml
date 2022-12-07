@@ -79,4 +79,12 @@
         android:name="com.example.semestralka.NearBarsList"
         android:label="fragment_near_bars_list"
         tools:layout="@layout/fragment_near_bars_list" />
+    <fragment
+        android:id="@+id/addFriendFragment"
+        android:name="com.example.semestralka.AddFriendFragment"
+        android:label="fragment_add_friend"
+        tools:layout="@layout/fragment_add_friend" />
+    <action
+        android:id="@+id/action_add_friend"
+        app:destination="@id/addFriendFragment" />
 </navigation>

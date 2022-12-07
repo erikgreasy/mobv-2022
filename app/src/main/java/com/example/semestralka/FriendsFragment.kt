@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.adapter.BarListItemAdapter
 import com.example.semestralka.adapter.FriendsListAdapter
@@ -47,6 +48,10 @@ class FriendsFragment : Fragment() {
         friendViewModel.friends.observe(viewLifecycleOwner, Observer {
             friendItemAdapter.friends = it
         })
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_add_friend)
+        }
 
         return binding.root
     }
