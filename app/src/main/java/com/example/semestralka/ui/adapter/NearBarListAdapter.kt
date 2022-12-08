@@ -1,4 +1,4 @@
-package com.example.semestralka.adapter
+package com.example.semestralka.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

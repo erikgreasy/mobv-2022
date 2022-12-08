@@ -11,13 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.BarApplication
 import com.example.semestralka.R
-import com.example.semestralka.adapter.FriendsListAdapter
+import com.example.semestralka.ui.adapter.FriendsListAdapter
 import com.example.semestralka.databinding.FragmentFriendsBinding
 import com.example.semestralka.ui.viewmodel.AuthViewModel
 import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 import com.example.semestralka.ui.viewmodel.FriendViewModel
 import com.example.semestralka.ui.viewmodel.FriendViewModelFactory
-import com.example.semestralka.viewmodel.*
+import com.example.semestralka.ui.viewmodel.*
 
 class FriendsFragment : Fragment() {
     private var _binding: FragmentFriendsBinding? = null

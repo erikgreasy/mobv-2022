@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.BarApplication
-import com.example.semestralka.adapter.BarListItemAdapter
+import com.example.semestralka.ui.adapter.BarListItemAdapter
 import com.example.semestralka.databinding.FragmentBarListBinding
 import com.example.semestralka.ui.viewmodel.AuthViewModel
 import com.example.semestralka.ui.viewmodel.AuthViewModelFactory

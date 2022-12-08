@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.semestralka.adapter.NearBarListAdapter
+import com.example.semestralka.ui.adapter.NearBarListAdapter
 import com.example.semestralka.databinding.FragmentNearBarsListBinding
 import com.example.semestralka.ui.viewmodel.LocateViewModel
 import com.example.semestralka.ui.viewmodel.LocateViewModelFactory
