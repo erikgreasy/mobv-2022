@@ -72,6 +72,8 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            binding.progressBar.isVisible = true
+
             authViewModel.login(username, password).observe(requireActivity(), Observer {
                 if(it == null) {
                     return@Observer
@@ -79,8 +81,9 @@ class LoginFragment : Fragment() {
 
                 if(!it) {
                     binding.passwordInputWrapper.error = "Zadané údaje sú nesprávne"
-                    return@Observer
                 }
+
+                binding.progressBar.isVisible = false
             })
         }
 
