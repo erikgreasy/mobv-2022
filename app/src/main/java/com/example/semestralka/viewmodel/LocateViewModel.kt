@@ -58,7 +58,9 @@ class LocateViewModel(val activity: Activity): ViewModel() {
                     NearbyBar(
                         it.id,
                         it.tags.get("name").toString(),
-                        "whatever"
+                        "whatever",
+                        it.lat,
+                        it.lon
                     )
                 }
             }

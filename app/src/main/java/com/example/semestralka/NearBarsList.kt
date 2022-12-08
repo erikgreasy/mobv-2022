@@ -61,6 +61,7 @@ class NearBarsList : Fragment() {
 
     private fun setupRecyclerView() = binding.nearBarListRecyclerView.apply {
         nearBarListAdapter = NearBarListAdapter()
+        nearBarListAdapter.locateViewModel = locateViewModel
         adapter = nearBarListAdapter
         layoutManager = LinearLayoutManager(this.context)
     }
@@ -72,15 +73,5 @@ class NearBarsList : Fragment() {
         } else {
             locateViewModel.getLocation()
         }
-    }
-
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-
     }
 }
