@@ -1,29 +1,25 @@
 package com.example.semestralka
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.airbnb.lottie.LottieAnimationView
+import com.example.semestralka.api.UserResponse
+import com.example.semestralka.data.LoggedUser
+import com.example.semestralka.data.PreferencesData
 import com.example.semestralka.databinding.ActivityMainBinding
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import kotlinx.coroutines.*
 import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,8 +28,25 @@ class MainActivity : AppCompatActivity() {
         AuthViewModelFactory()
     }
 
+    private lateinit var sharedPreferencesData: PreferencesData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferencesData = PreferencesData(applicationContext)
+
+        val loggedUser = sharedPreferencesData.getLoggedUser()
+
+        Log.e("ASD", loggedUser.toString())
+
+        if(loggedUser != null) {
+            authViewModel.isLoggedIn.value = true
+            authViewModel.loggedUser.value = UserResponse(
+                loggedUser.uid,
+                loggedUser.access,
+                loggedUser.refresh
+            )
+        }
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,9 +63,19 @@ class MainActivity : AppCompatActivity() {
             if(it) {
                 binding.bottonnav.isVisible = true
                 navController.navigate(R.id.action_bar_list)
+
+                sharedPreferencesData.setLoggedUser(LoggedUser(
+                    authViewModel.loggedUser.value?.uid!!,
+                    authViewModel.loggedUser.value?.access!!,
+                    authViewModel.loggedUser.value?.refresh!!,
+                ))
+
+                Log.e("ASDASD", sharedPreferencesData.getLoggedUser().toString())
             } else {
                 binding.bottonnav.isVisible = false
                 navController.navigate(R.id.loginFragment)
+
+                sharedPreferencesData.removeLoggedUser()
             }
         })
 
