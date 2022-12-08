@@ -6,33 +6,6 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/drinkFragment"
-        android:name="com.example.semestralka.DrinkFragment"
-        android:label="fragment_drink"
-        tools:layout="@layout/fragment_drink" >
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="barName"
-            app:argType="string" />
-        <argument
-            android:name="barLat"
-            app:argType="string" />
-        <argument
-            android:name="barLong"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/formFragment"
-        android:name="com.example.semestralka.FormFragment"
-        android:label="fragment_form"
-        tools:layout="@layout/fragment_form" >
-        <action
-            android:id="@+id/action_formFragment_to_drinkFragment"
-            app:destination="@id/drinkFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/barListFragment"
         android:name="com.example.semestralka.ui.bars.BarListFragment"
         android:label="fragment_bar_list"
