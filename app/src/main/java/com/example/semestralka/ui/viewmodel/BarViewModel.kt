@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
+import com.example.semestralka.BarApplication
 import com.example.semestralka.api.RefreshData
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.data.*
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class BarViewModel(val authViewModel: AuthViewModel, val application: Application): ViewModel() {
+class BarViewModel(val authViewModel: AuthViewModel, val application: BarApplication): ViewModel() {
     val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
     val barDetail = MutableLiveData<NearbyBar?>(null)
 
@@ -67,9 +68,30 @@ class BarViewModel(val authViewModel: AuthViewModel, val application: Applicatio
                 }
 
                 bars.value = response.body()!!
+                application.database.appDao().insertBars(
+                    response.body()!!.map {
+                        BarItem(
+                            it.bar_id,
+                            it.bar_name,
+                            "aaa",
+                            it.lat.toDouble(),
+                            it.lon.toDouble(),
+                            it.users.toInt()
+                        )
+                    }
+                )
             } catch(e: IOException) {
                 e.printStackTrace()
                 Log.e("fetching bars", "IO exception")
+                bars.value = application.database.appDao().getBars().value?.map {
+                    com.example.semestralka.api.Bar(
+                        it.id,
+                        it.name,
+                        it.lat.toString(),
+                        it.lon.toString(),
+                        it.users.toString()
+                    )
+                }
             } catch(e: java.lang.Exception) {
                 e.printStackTrace()
                 Log.e("fetching bars", "general exception")
@@ -109,11 +131,12 @@ class BarViewModel(val authViewModel: AuthViewModel, val application: Applicatio
                 bar.lon,
                 bar.tags
             )
+            application
         }
     }
 }
 
-class BarViewModelFactory(private val authViewModel: AuthViewModel, private val application: Application) : ViewModelProvider.Factory {
+class BarViewModelFactory(private val authViewModel: AuthViewModel, private val application: BarApplication) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BarViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

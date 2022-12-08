@@ -45,7 +45,9 @@ class BarListFragment : Fragment() {
         barListItemAdapter.bars = barViewModel.bars.value!!
 
         barViewModel.bars.observe(viewLifecycleOwner, Observer {
-            barListItemAdapter.bars = it
+            if(it != null) {
+                barListItemAdapter.bars = it
+            }
         })
 
         binding.swiperefresh.setOnRefreshListener {
