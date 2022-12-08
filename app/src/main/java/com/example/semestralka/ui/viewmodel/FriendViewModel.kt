@@ -12,10 +12,12 @@ import kotlinx.coroutines.launch
 class FriendViewModel(val authViewModel: AuthViewModel, val application: Application): ViewModel() {
 //    val bars = MutableLiveData<MutableList<Bar>>()
     val friends = MutableLiveData<List<User>>(listOf())
+    val friendsAddedByMe = MutableLiveData<List<User>>(listOf())
     val loading = MutableLiveData<Boolean>(false)
 
     init {
         loadFriends()
+        loadFriendsAddedByMe()
     }
 
     fun loadFriends() {
@@ -36,6 +38,27 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
             }
 
             Log.e("FRIEND VIEW MODEL", friends.value.toString())
+        }
+    }
+
+    fun loadFriendsAddedByMe() {
+        Log.e("FRINED VIEW MODEL", "LOADING FRIENDS added by me")
+
+        viewModelScope.launch {
+            val response = RetrofitInstance.api.getFriendsAddedByMe(
+                authViewModel.loggedUser.value?.uid!!,
+                "Bearer " + authViewModel.loggedUser.value?.access!!
+            )
+
+            Log.e("get friends added by me", response.toString())
+
+            if(response.isSuccessful) {
+                Log.e("GREASY", response.body().toString())
+
+                friendsAddedByMe.value = response.body()!!
+            }
+
+            Log.e("frnds added by me res", friendsAddedByMe.value.toString())
         }
     }
 

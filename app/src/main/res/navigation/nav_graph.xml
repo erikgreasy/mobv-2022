@@ -60,4 +60,12 @@
     <action
         android:id="@+id/action_add_friend"
         app:destination="@id/addFriendFragment" />
+    <fragment
+        android:id="@+id/friendsAddedByMeFragment"
+        android:name="com.example.semestralka.FriendsAddedByMeFragment"
+        android:label="fragment_friends_added_by_me"
+        tools:layout="@layout/fragment_friends_added_by_me" />
+    <action
+        android:id="@+id/action_friends_added_by_me"
+        app:destination="@id/friendsAddedByMeFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.fragments.friends
+package com.example.semestralka
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,21 +9,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.semestralka.BarApplication
-import com.example.semestralka.R
-import com.example.semestralka.ui.adapter.FriendsListAdapter
+import com.example.semestralka.databinding.FragmentFriendsAddedByMeBinding
 import com.example.semestralka.databinding.FragmentFriendsBinding
+import com.example.semestralka.ui.adapter.FriendsAddedByMeAdapter
+import com.example.semestralka.ui.adapter.FriendsListAdapter
 import com.example.semestralka.ui.viewmodel.AuthViewModel
 import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 import com.example.semestralka.ui.viewmodel.FriendViewModel
 import com.example.semestralka.ui.viewmodel.FriendViewModelFactory
-import com.example.semestralka.ui.viewmodel.*
 
-class FriendsFragment : Fragment() {
-    private var _binding: FragmentFriendsBinding? = null
+class FriendsAddedByMeFragment : Fragment() {
+    private var _binding: FragmentFriendsAddedByMeBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var friendItemAdapter: FriendsListAdapter
+    private lateinit var friendsAddedBeMeAdapter: FriendsAddedByMeAdapter
 
     private val friendViewModel: FriendViewModel by activityViewModels {
         FriendViewModelFactory(
@@ -40,30 +38,26 @@ class FriendsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFriendsBinding.inflate(inflater, container, false)
+        _binding = FragmentFriendsAddedByMeBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
 
-        friendItemAdapter.friends = friendViewModel.friends.value!!
+        friendsAddedBeMeAdapter.friends = friendViewModel.friendsAddedByMe.value!!
 
-        friendViewModel.friends.observe(viewLifecycleOwner, Observer {
-            friendItemAdapter.friends = it
+        friendViewModel.friendsAddedByMe.observe(viewLifecycleOwner, Observer {
+            friendsAddedBeMeAdapter.friends = it
         })
 
-        binding.usersIAddedBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_friends_added_by_me)
-        }
-
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_add_friend)
+        binding.friendsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_friends)
         }
 
         return binding.root
     }
 
-    private fun setupRecyclerView() = binding.friendsListRecyclerView.apply {
-        friendItemAdapter = FriendsListAdapter()
-        adapter = friendItemAdapter
+    private fun setupRecyclerView() = binding.friendsAddedByMeRecyclerView.apply {
+        friendsAddedBeMeAdapter = FriendsAddedByMeAdapter()
+        adapter = friendsAddedBeMeAdapter
         layoutManager = LinearLayoutManager(this.context)
     }
 }

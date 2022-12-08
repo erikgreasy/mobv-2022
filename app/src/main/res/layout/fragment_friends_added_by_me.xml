@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.friends.FriendsFragment">
+    tools:context=".FriendsAddedByMeFragment">
 
     <Button
-        android:id="@+id/users_i_added_btn"
+        android:id="@+id/friends_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Pridal som si ja"
+        android:text="Pridali si mňa"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friends_list_recycler_view"
+        android:id="@+id/friends_added_by_me_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -27,15 +27,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingTop="60dp"
         />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Pridať"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
