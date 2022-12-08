@@ -13,8 +13,8 @@ import com.example.semestralka.data.NearbyBar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.databinding.NearBarListItemBinding
 import com.example.semestralka.service.DistanceCounter
-import com.example.semestralka.viewmodel.LocateViewModel
-import com.example.semestralka.viewmodel.LocateViewModelFactory
+import com.example.semestralka.ui.viewmodel.LocateViewModel
+import com.example.semestralka.ui.viewmodel.LocateViewModelFactory
 
 
 class NearBarListAdapter() : RecyclerView.Adapter<NearBarListAdapter.NearBarListViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.friends
+package com.example.semestralka.ui.fragments.friends
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +13,10 @@ import com.example.semestralka.BarApplication
 import com.example.semestralka.R
 import com.example.semestralka.adapter.FriendsListAdapter
 import com.example.semestralka.databinding.FragmentFriendsBinding
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.FriendViewModel
+import com.example.semestralka.ui.viewmodel.FriendViewModelFactory
 import com.example.semestralka.viewmodel.*
 
 class FriendsFragment : Fragment() {

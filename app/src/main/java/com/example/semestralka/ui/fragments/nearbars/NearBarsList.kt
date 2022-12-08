@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.nearbars
+package com.example.semestralka.ui.fragments.nearbars
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -15,8 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.adapter.NearBarListAdapter
 import com.example.semestralka.databinding.FragmentNearBarsListBinding
-import com.example.semestralka.viewmodel.LocateViewModel
-import com.example.semestralka.viewmodel.LocateViewModelFactory
+import com.example.semestralka.ui.viewmodel.LocateViewModel
+import com.example.semestralka.ui.viewmodel.LocateViewModelFactory
 
 class NearBarsList : Fragment() {
     private var _binding: FragmentNearBarsListBinding? = null

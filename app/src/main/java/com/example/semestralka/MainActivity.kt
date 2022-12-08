@@ -18,10 +18,10 @@ import com.example.semestralka.api.UserResponse
 import com.example.semestralka.data.LoggedUser
 import com.example.semestralka.data.PreferencesData
 import com.example.semestralka.databinding.ActivityMainBinding
-import com.example.semestralka.viewmodel.AuthViewModel
-import com.example.semestralka.viewmodel.AuthViewModelFactory
-import com.example.semestralka.viewmodel.LocateViewModel
-import com.example.semestralka.viewmodel.LocateViewModelFactory
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.LocateViewModel
+import com.example.semestralka.ui.viewmodel.LocateViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import kotlinx.coroutines.*
 import retrofit2.*

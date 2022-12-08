@@ -1,4 +1,4 @@
-package com.example.semestralka.viewmodel
+package com.example.semestralka.ui.viewmodel
 
 import android.app.Application
 import android.util.Log
@@ -7,7 +7,6 @@ import androidx.lifecycle.*
 import com.example.semestralka.api.RefreshData
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.data.*
-import com.example.semestralka.repository.BarRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

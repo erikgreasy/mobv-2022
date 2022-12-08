@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.bars
+package com.example.semestralka.ui.fragments.bars
 
 import android.content.Intent
 import android.net.Uri
@@ -12,10 +12,10 @@ import androidx.navigation.fragment.navArgs
 import com.example.semestralka.BarApplication
 import com.example.semestralka.api.Bar
 import com.example.semestralka.databinding.FragmentBarDetailBinding
-import com.example.semestralka.viewmodel.AuthViewModel
-import com.example.semestralka.viewmodel.AuthViewModelFactory
-import com.example.semestralka.viewmodel.BarViewModel
-import com.example.semestralka.viewmodel.BarViewModelFactory
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.BarViewModel
+import com.example.semestralka.ui.viewmodel.BarViewModelFactory
 
 /**
  * A simple [Fragment] subclass.

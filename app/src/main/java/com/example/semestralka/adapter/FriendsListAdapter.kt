@@ -19,8 +19,8 @@ import com.example.semestralka.api.User
 import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.databinding.FriendItemBinding
-import com.example.semestralka.ui.bars.BarDetailFragmentDirections
-import com.example.semestralka.viewmodel.BarViewModel
+import com.example.semestralka.ui.fragments.bars.BarDetailFragmentDirections
+import com.example.semestralka.ui.viewmodel.BarViewModel
 
 class FriendsListAdapter : RecyclerView.Adapter<FriendsListAdapter.FriendsListViewHolder>() {
 

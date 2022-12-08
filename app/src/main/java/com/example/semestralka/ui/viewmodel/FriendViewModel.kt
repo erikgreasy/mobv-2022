@@ -1,4 +1,4 @@
-package com.example.semestralka.viewmodel
+package com.example.semestralka.ui.viewmodel
 
 import android.app.Application
 import android.util.Log

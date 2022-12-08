@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.auth
+package com.example.semestralka.ui.fragments.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.semestralka.R
 import com.example.semestralka.databinding.FragmentRegisterBinding
-import com.example.semestralka.viewmodel.AuthViewModel
-import com.example.semestralka.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null

@@ -1,4 +1,4 @@
-package com.example.semestralka.viewmodel
+package com.example.semestralka.ui.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Activity

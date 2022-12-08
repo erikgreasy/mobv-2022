@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="35dp"
-    tools:context=".ui.friends.AddFriendFragment">
+    tools:context=".ui.fragments.friends.AddFriendFragment">
 
     <TextView
         android:id="@+id/title"

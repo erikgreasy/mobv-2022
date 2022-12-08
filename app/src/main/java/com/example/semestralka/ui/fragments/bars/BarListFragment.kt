@@ -1,29 +1,20 @@
-package com.example.semestralka.ui.bars
+package com.example.semestralka.ui.fragments.bars
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.BarApplication
 import com.example.semestralka.adapter.BarListItemAdapter
-import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.databinding.FragmentBarListBinding
-import com.example.semestralka.viewmodel.AuthViewModel
-import com.example.semestralka.viewmodel.AuthViewModelFactory
-import com.example.semestralka.viewmodel.BarViewModel
-import com.example.semestralka.viewmodel.BarViewModelFactory
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.BarViewModel
+import com.example.semestralka.ui.viewmodel.BarViewModelFactory
 
 class BarListFragment : Fragment() {
 

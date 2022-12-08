@@ -1,4 +1,4 @@
-package com.example.semestralka.ui.friends
+package com.example.semestralka.ui.fragments.friends
 
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.semestralka.BarApplication
 import com.example.semestralka.R
 import com.example.semestralka.databinding.FragmentAddFriendBinding
-import com.example.semestralka.viewmodel.AuthViewModel
-import com.example.semestralka.viewmodel.AuthViewModelFactory
-import com.example.semestralka.viewmodel.FriendViewModel
-import com.example.semestralka.viewmodel.FriendViewModelFactory
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
+import com.example.semestralka.ui.viewmodel.FriendViewModel
+import com.example.semestralka.ui.viewmodel.FriendViewModelFactory
 
 class AddFriendFragment : Fragment() {
     private var _binding: FragmentAddFriendBinding? = null
