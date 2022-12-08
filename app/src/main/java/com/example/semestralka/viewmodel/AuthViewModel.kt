@@ -14,31 +14,33 @@ import com.example.semestralka.api.UserResponse
 import com.example.semestralka.data.BarDao
 import com.example.semestralka.service.PasswordHasher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class AuthViewModel: ViewModel() {
     val loggedUser = MutableLiveData<UserResponse?>(null)
     val isLoggedIn = MutableLiveData<Boolean>(false)
     val passwordHasher = PasswordHasher()
 
-    fun login(username: String, password: String) {
-        viewModelScope.launch {
-            val hashedPassword = passwordHasher.hashPassword(password)
-            val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
+    fun login(username: String, password: String): Boolean = runBlocking{
+        val hashedPassword = passwordHasher.hashPassword(password)
+        val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
 
-            Log.e("GREASY", response.toString())
-            Log.e("GREASY", response.body().toString())
+        Log.e("GREASY", response.toString())
+        Log.e("GREASY", response.body().toString())
 
-            if(response.isSuccessful) {
-                val responseBody = response.body()
-                Log.e("GREASY", responseBody?.uid.toString())
-
-                if(didUserAuthenticate(responseBody!!)) {
-                    loggedUser.value = responseBody!!
-                    isLoggedIn.value = true
-                }
-            }
-
+        if(!response.isSuccessful) {
+            false
         }
+        val responseBody = response.body()
+
+        if(!didUserAuthenticate(responseBody!!)) {
+            false
+        }
+
+        loggedUser.value = responseBody!!
+        isLoggedIn.value = true
+
+        true
     }
 
     fun register(username: String, password: String) {

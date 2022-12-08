@@ -5,15 +5,39 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="30dp"
     tools:context=".FormFragment">
+
+    <TextView
+        android:id="@+id/app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrácia"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="40dp"
+        android:layout_marginTop="50dp"
+        />
+
+    <TextView
+        android:id="@+id/app_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pre registráciu vyplňte nasledujúce polia"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_title"
+        />
 
     <TextView
         android:id="@+id/name_input_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Zadajte prihlasovacie meno"
+        app:layout_constraintTop_toBottomOf="@+id/app_tagline"
+        android:text="Prihlasovacie meno"
+        android:layout_marginTop="70dp"
         />
 
     <EditText
@@ -31,7 +55,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_input"
-        android:text="Zadajte vaše heslo"
+        android:text="Vaše heslo"
+        android:layout_marginTop="10dp"
         />
 
     <EditText
@@ -50,6 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_input"
         android:text="Zopakujte vaše heslo"
+        android:layout_marginTop="10dp"
         />
 
     <EditText
@@ -69,17 +95,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_confirm_input"
         android:text="Prihlásiť"
+        android:layout_marginTop="20dp"
         />
 
     <TextView
         android:id="@+id/login_link"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submit_button"
-        android:text="alebo sa prihláste"
+        android:text="Už máte účet? Priháste sa"
+        android:layout_marginTop="35dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

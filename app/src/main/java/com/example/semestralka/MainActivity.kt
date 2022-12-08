@@ -1,14 +1,12 @@
 package com.example.semestralka
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -24,8 +22,6 @@ import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
 import com.example.semestralka.viewmodel.LocateViewModel
 import com.example.semestralka.viewmodel.LocateViewModelFactory
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import kotlinx.coroutines.*
 import retrofit2.*

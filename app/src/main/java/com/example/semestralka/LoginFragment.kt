@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,8 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+
+//        requireContext() .supportActionBar!!.hide()
     }
 
     override fun onCreateView(
@@ -47,19 +50,43 @@ class LoginFragment : Fragment() {
         }
 
         binding.submitButton.setOnClickListener {
-            binding.progressBar.isVisible = true
+            binding.usernameInputWrapper.error = null
+            binding.passwordInputWrapper.error = null
 
             val username = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
+            var error = false
 
-            authViewModel.login(username, password)
+            if(username.trim() == "") {
+                binding.usernameInputWrapper.error = "Pole je povinné"
+                error = true
+            }
+
+            if(password.trim() == "") {
+                binding.passwordInputWrapper.error = "Pole je povinné"
+                error = true
+            }
+
+            if(error) {
+                return@setOnClickListener
+            }
+
+            if(!authViewModel.login(username, password)) {
+                binding.passwordInputWrapper.error = "Zadané údaje sú nesprávne"
+                error = true
+                return@setOnClickListener
+            }
 
             Log.e("SUCCESS GREASY TRY", authViewModel.loggedUser.toString())
 
             // TODO: refactor this because now the process in couroutine doesnt work correclty showing this progressbar
-            binding.progressBar.isVisible = false
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
     }
 }
