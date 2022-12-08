@@ -63,4 +63,7 @@ interface FinalApi {
         @Body
         friendData: AddFriendRequest
     ): Response<Void>
+
+    @GET("https://overpass-api.de/api/interpreter?")
+    suspend fun barNearby(@Query("data") data: String): Response<BarDetailResponse>
 }
