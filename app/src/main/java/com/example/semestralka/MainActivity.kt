@@ -94,20 +94,6 @@ class MainActivity : AppCompatActivity() {
             authViewModel.logout()
         }
 
-//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-//            Log.e("GREASY", "navigation")
-//            Log.e("GREASY", destination.id.toString())
-//            Log.e("GREASY", R.id.loginFragment.toString())
-//
-//            // check if trying to access non auth views without being logged in
-//            if(
-//                authViewModel.isLoggedIn.value == false && destination.id != R.id.loginFragment
-//            ) {
-//                navController.navigate(R.id.action_login)
-//                false
-//            }
-//        }
-
         setupActionBarWithNavController(navController)
     }
 

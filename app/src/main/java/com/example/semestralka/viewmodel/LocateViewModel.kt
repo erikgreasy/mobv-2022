@@ -29,17 +29,7 @@ class LocateViewModel(val activity: Activity): ViewModel() {
     val bars = MutableLiveData<List<NearbyBar>>(listOf())
     private val fusedLocationProviderClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
 
-    init {
-//        loadBars()
-
-    }
-
     fun loadBars() {
-//        bars.value = listOf(
-//            NearbyBar("123", "Nazov1", "Restika"),
-//            NearbyBar("1234", "Nazov2", "Restika"),
-//            NearbyBar("125", "Nazov3", "Restika"),
-//        )
         viewModelScope.launch {
 
 
@@ -52,6 +42,7 @@ class LocateViewModel(val activity: Activity): ViewModel() {
 
             val response = RetrofitInstance.api.barNearby(q)
 
+            Log.e("locate model", response.toString())
 
             if(response.isSuccessful) {
                 bars.value = response.body()?.elements?.map {

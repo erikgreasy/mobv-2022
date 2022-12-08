@@ -1,5 +1,7 @@
 package com.example.semestralka
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,10 +48,15 @@ class BarDetailFragment : Fragment() {
         binding.apply {
             barName.text = bar.bar_name
 
-            deleteBtn.setOnClickListener {
-//
-//                val action =   BarDetailFragmentDirections.actionBarDetailFragmentToBarListFragment()
-//                findNavController().navigate(action)
+            binding.showOnMap.setOnClickListener {
+                val mapIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("geo:0,0,?q=" +
+                            "${bar.lat ?: 0}," +
+                            "${bar.lon ?: 0}" +
+                            "(${bar.bar_name ?: ""}")
+                )
+                startActivity(mapIntent)
             }
         }
     }

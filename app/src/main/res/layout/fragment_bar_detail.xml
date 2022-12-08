@@ -18,12 +18,12 @@
         />
 
     <Button
-        android:id="@+id/delete_btn"
+        android:id="@+id/show_on_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bar_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar_name"
-        android:text="Odstrániť"
-    />
+        android:text="Zobraziť na mape"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,6 @@ class NearBarsList : Fragment() {
 
         checkPermissions()
 
-//        locateViewModel.loadBars()
 
         locateViewModel.bars.observe(viewLifecycleOwner, Observer {
             nearBarListAdapter.bars = it
