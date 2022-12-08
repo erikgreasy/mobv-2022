@@ -1,5 +1,6 @@
 package com.example.semestralka.service
 
+import android.util.Log
 import okhttp3.internal.and
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -27,6 +28,8 @@ class PasswordHasher {
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }
+
+        Log.e("PASS", generatedPassword.toString())
 
         return generatedPassword!!
     }

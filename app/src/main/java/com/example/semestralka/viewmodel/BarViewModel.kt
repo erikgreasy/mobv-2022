@@ -4,16 +4,15 @@ import android.app.Application
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
+import com.example.semestralka.api.RefreshData
 import com.example.semestralka.api.RetrofitInstance
-import com.example.semestralka.data.Bar
-import com.example.semestralka.data.BarDao
-import com.example.semestralka.data.BarDatabase
+import com.example.semestralka.data.*
 import com.example.semestralka.repository.BarRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BarViewModel(authViewModel: AuthViewModel, application: Application): ViewModel() {
+class BarViewModel(authViewModel: AuthViewModel, val application: Application): ViewModel() {
 //    val bars = MutableLiveData<MutableList<Bar>>()
     val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
 
@@ -31,9 +30,40 @@ class BarViewModel(authViewModel: AuthViewModel, application: Application): View
 
             Log.e("GREASY", response.toString())
 
-            if(response.isSuccessful) {
-                bars.value = response.body()!!
+            if(!response.isSuccessful) {
+                Log.e("ASD", "neuspesny fetch barov")
+                if(response.code() == 401) {
+                    val prefrencesData = PreferencesData(application.applicationContext)
+                    val refreshToken = prefrencesData.getLoggedUser()?.refresh
+
+                    if(refreshToken == null) {
+                        return@launch
+                    }
+
+                    val refreshResponse = RetrofitInstance.api.refresh(
+                        authViewModel.loggedUser.value?.uid!!,
+                        RefreshData(
+                            refreshToken
+                        )
+                    )
+
+                    if(refreshResponse.isSuccessful) {
+                        prefrencesData.setLoggedUser(LoggedUser(
+                            refreshResponse.body()?.uid!!,
+                            refreshResponse.body()?.access!!,
+                            refreshResponse.body()?.refresh!!,
+                        ))
+                    } else {
+                        Log.e("ASD", "nepodarilo sa refreshnut")
+                        Log.e("ASD", refreshResponse.toString())
+                        authViewModel.logout()
+                    }
+
+                    return@launch
+                }
             }
+
+            bars.value = response.body()!!
         }
     }
 

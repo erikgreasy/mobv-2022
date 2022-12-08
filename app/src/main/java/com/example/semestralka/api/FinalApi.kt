@@ -28,6 +28,19 @@ interface FinalApi {
         userData: UserRequest
     ): Response<UserResponse>
 
+    @POST("user/refresh.php")
+    @Headers(
+        "x-apikey: c95332ee022df8c953ce470261efc695ecf3e784",
+    )
+    suspend fun refresh(
+        @Header("x-user")
+        user: String,
+
+        @Body
+        refreshData: RefreshData
+    ): Response<UserResponse>
+
+
     @POST("user/create.php")
     @Headers(
         "x-apikey: c95332ee022df8c953ce470261efc695ecf3e784",
