@@ -30,62 +30,74 @@
         app:layout_constraintTop_toBottomOf="@+id/app_title"
         />
 
-    <TextView
-        android:id="@+id/name_input_label"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username_input_wrapper"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toBottomOf="@+id/app_tagline"
-        android:text="Prihlasovacie meno"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="70dp"
-        />
+        app:errorEnabled="true"
+        android:hint="Prihlasovacie meno">
 
-    <EditText
-        android:id="@+id/name_input"
+        <!--this is the actual edit text which takes the input-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_input"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_input_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/name_input_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@+id/username_input_wrapper"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        android:layout_marginTop="5dp"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
+        android:hint="Heslo">
 
-    <TextView
-        android:id="@+id/password_input_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_input"
-        android:text="Vaše heslo"
-        android:layout_marginTop="10dp"
-        />
+        <!--this is the actual edit text which takes the input-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/password_input"
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_confirm_input_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/password_input_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toBottomOf="@+id/password_input_wrapper"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        android:layout_marginTop="5dp"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
+        android:hint="Zopakujte heslo">
 
-    <TextView
-        android:id="@+id/password_confirm_input_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_input"
-        android:text="Zopakujte vaše heslo"
-        android:layout_marginTop="10dp"
-        />
+        <!--this is the actual edit text which takes the input-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_confirm_input"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/password_confirm_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@+id/password_confirm_input_label"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/submit_button"
@@ -93,7 +105,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_confirm_input"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_input_wrapper"
         android:text="Prihlásiť"
         android:layout_marginTop="20dp"
         />

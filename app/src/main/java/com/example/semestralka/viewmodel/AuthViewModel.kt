@@ -43,24 +43,25 @@ class AuthViewModel: ViewModel() {
         true
     }
 
-    fun register(username: String, password: String) {
-        viewModelScope.launch {
-            val hashedPassword = passwordHasher.hashPassword(password)
-            val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
+    fun register(username: String, password: String): Boolean = runBlocking{
+        val hashedPassword = passwordHasher.hashPassword(password)
+        val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
 
-            Log.e("GREASY", response.toString())
-            Log.e("GREASY", response.body().toString())
-
-            if(response.isSuccessful) {
-                val responseBody = response.body()
-                Log.e("GREASY", responseBody?.uid.toString())
-
-                if(didUserAuthenticate(responseBody!!)) {
-                    loggedUser.value = responseBody!!
-                    isLoggedIn.value = true
-                }
-            }
+        if(!response.isSuccessful) {
+            false
         }
+
+        val responseBody = response.body()
+
+        if(!didUserAuthenticate(responseBody!!)) {
+            false
+        }
+
+        Log.e("PREBEHLO USPESNE", responseBody.toString())
+        loggedUser.value = responseBody!!
+        isLoggedIn.value = true
+
+        true
     }
 
     fun logout() {
@@ -69,6 +70,7 @@ class AuthViewModel: ViewModel() {
     }
 
     private fun didUserAuthenticate(responseBody: UserResponse): Boolean {
+        Log.e("did authenticate", (responseBody?.uid.toString() != "-1").toString())
         return responseBody?.uid.toString() != "-1"
     }
 }
