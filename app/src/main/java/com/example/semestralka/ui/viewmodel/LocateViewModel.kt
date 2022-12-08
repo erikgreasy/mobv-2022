@@ -81,6 +81,12 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
 
                 Log.e("checking to bar", response.toString())
                 Log.e("checking to bar", response.body().toString())
+
+                if(!response.isSuccessful) {
+                    return@launch
+                }
+
+                Toast.makeText(activity, "Úspešne nahlásený", Toast.LENGTH_SHORT).show()
             }
         } catch(e: IOException) {
             e.printStackTrace()
