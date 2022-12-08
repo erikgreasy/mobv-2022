@@ -2,6 +2,7 @@ package com.example.semestralka.ui.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.example.semestralka.R
@@ -12,6 +13,7 @@ import com.example.semestralka.data.BarDao
 import com.example.semestralka.service.PasswordHasher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.io.IOException
 
 class AuthViewModel: ViewModel() {
     val loggedUser = MutableLiveData<UserResponse?>(null)
@@ -22,27 +24,35 @@ class AuthViewModel: ViewModel() {
         val success = MutableLiveData<Boolean?>(null)
 
         viewModelScope.launch {
-            val hashedPassword = passwordHasher.hashPassword(password)
-            val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
+            try {
+                val hashedPassword = passwordHasher.hashPassword(password)
+                val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
 
-            Log.e("GREASY", response.toString())
-            Log.e("GREASY", response.body().toString())
+                Log.e("GREASY", response.toString())
+                Log.e("GREASY", response.body().toString())
 
-            if(!response.isSuccessful) {
-                success.postValue(false)
-                return@launch
+                if(!response.isSuccessful) {
+                    success.postValue(false)
+                    return@launch
+                }
+                val responseBody = response.body()
+
+                if(!didUserAuthenticate(responseBody!!)) {
+                    success.postValue(false)
+                    return@launch
+                }
+
+                loggedUser.value = responseBody!!
+                isLoggedIn.value = true
+
+                success.postValue(true)
+            } catch(e: IOException) {
+                e.printStackTrace()
+                Log.e("login request", "io exception")
+            } catch(e: java.lang.Exception) {
+                e.printStackTrace()
+                Log.e("login request", "general exception")
             }
-            val responseBody = response.body()
-
-            if(!didUserAuthenticate(responseBody!!)) {
-                success.postValue(false)
-                return@launch
-            }
-
-            loggedUser.value = responseBody!!
-            isLoggedIn.value = true
-
-            success.postValue(true)
         }
 
         return success
@@ -52,26 +62,34 @@ class AuthViewModel: ViewModel() {
         val success = MutableLiveData<Boolean?>(null)
 
         viewModelScope.launch {
-            val hashedPassword = passwordHasher.hashPassword(password)
-            val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
+            try {
+                val hashedPassword = passwordHasher.hashPassword(password)
+                val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
 
-            if(!response.isSuccessful) {
-                success.postValue(false)
-                return@launch
+                if(!response.isSuccessful) {
+                    success.postValue(false)
+                    return@launch
+                }
+
+                val responseBody = response.body()
+
+                if(!didUserAuthenticate(responseBody!!)) {
+                    success.postValue(false)
+                    return@launch
+                }
+
+                Log.e("PREBEHLO USPESNE", responseBody.toString())
+                loggedUser.value = responseBody!!
+                isLoggedIn.value = true
+
+                success.postValue(true)
+            } catch(e: IOException) {
+                e.printStackTrace()
+                Log.e("register request", "io exception")
+            } catch(e: Exception) {
+                e.printStackTrace()
+                Log.e("register request", "general exception")
             }
-
-            val responseBody = response.body()
-
-            if(!didUserAuthenticate(responseBody!!)) {
-                success.postValue(false)
-                return@launch
-            }
-
-            Log.e("PREBEHLO USPESNE", responseBody.toString())
-            loggedUser.value = responseBody!!
-            isLoggedIn.value = true
-
-            success.postValue(true)
         }
 
         return success

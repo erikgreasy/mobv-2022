@@ -10,6 +10,7 @@ import com.example.semestralka.data.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class BarViewModel(val authViewModel: AuthViewModel, val application: Application): ViewModel() {
     val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
@@ -20,47 +21,56 @@ class BarViewModel(val authViewModel: AuthViewModel, val application: Applicatio
 
     fun loadBars() {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.getActiveBars(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!
-            )
+            try {
 
-            Log.e("BAR VIEW MODEL LOADBARS", response.toString())
+                val response = RetrofitInstance.api.getActiveBars(
+                    authViewModel.loggedUser.value?.uid!!,
+                    "Bearer " + authViewModel.loggedUser.value?.access!!
+                )
 
-            if(!response.isSuccessful) {
-                Log.e("BAR VIEW MODEL LOADBARS", "neuspesny fetch barov")
-                if(response.code() == 401) {
-                    val prefrencesData = PreferencesData(application.applicationContext)
-                    val refreshToken = prefrencesData.getLoggedUser()?.refresh
+                Log.e("BAR VIEW MODEL LOADBARS", response.toString())
 
-                    if(refreshToken == null) {
+                if(!response.isSuccessful) {
+                    Log.e("BAR VIEW MODEL LOADBARS", "neuspesny fetch barov")
+                    if(response.code() == 401) {
+                        val prefrencesData = PreferencesData(application.applicationContext)
+                        val refreshToken = prefrencesData.getLoggedUser()?.refresh
+
+                        if(refreshToken == null) {
+                            return@launch
+                        }
+
+                        val refreshResponse = RetrofitInstance.api.refresh(
+                            authViewModel.loggedUser.value?.uid!!,
+                            RefreshData(
+                                refreshToken
+                            )
+                        )
+
+                        if(refreshResponse.isSuccessful) {
+                            prefrencesData.setLoggedUser(LoggedUser(
+                                refreshResponse.body()?.uid!!,
+                                refreshResponse.body()?.access!!,
+                                refreshResponse.body()?.refresh!!,
+                            ))
+                        } else {
+                            Log.e("ASD", "nepodarilo sa refreshnut")
+                            Log.e("ASD", refreshResponse.toString())
+                            authViewModel.logout()
+                        }
+
                         return@launch
                     }
-
-                    val refreshResponse = RetrofitInstance.api.refresh(
-                        authViewModel.loggedUser.value?.uid!!,
-                        RefreshData(
-                            refreshToken
-                        )
-                    )
-
-                    if(refreshResponse.isSuccessful) {
-                        prefrencesData.setLoggedUser(LoggedUser(
-                            refreshResponse.body()?.uid!!,
-                            refreshResponse.body()?.access!!,
-                            refreshResponse.body()?.refresh!!,
-                        ))
-                    } else {
-                        Log.e("ASD", "nepodarilo sa refreshnut")
-                        Log.e("ASD", refreshResponse.toString())
-                        authViewModel.logout()
-                    }
-
-                    return@launch
                 }
-            }
 
-            bars.value = response.body()!!
+                bars.value = response.body()!!
+            } catch(e: IOException) {
+                e.printStackTrace()
+                Log.e("fetching bars", "IO exception")
+            } catch(e: java.lang.Exception) {
+                e.printStackTrace()
+                Log.e("fetching bars", "general exception")
+            }
         }
     }
 
