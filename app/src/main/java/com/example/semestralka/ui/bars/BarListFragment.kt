@@ -25,8 +25,6 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-const val BASE_URL = "https://data.mongodb-api.com/app/data-fswjp/endpoint/data/v1/"
-
 class BarListFragment : Fragment() {
 
     private val barViewModel: BarViewModel by activityViewModels {
@@ -58,30 +56,13 @@ class BarListFragment : Fragment() {
         barViewModel.bars.observe(viewLifecycleOwner, Observer {
             barListItemAdapter.bars = it
         })
-//        lifecycleScope.launch {
-//            binding.progressBar.isVisible = true
-//
-//            val response = RetrofitInstance.api.getActiveBars(
-//                authViewModel.loggedUser.value?.uid!!,
-//                "Bearer " + authViewModel.loggedUser.value?.access!!
-//            )
-//
-//            Log.e("GREASY", response.toString())
-//
-//            if(response.isSuccessful) {
-//                barListItemAdapter.bars = response.body()!!
-//            }
-//
-//            binding.progressBar.isVisible = false
-//        }
 
+        binding.swiperefresh.setOnRefreshListener {
+            barViewModel.loadBars()
+            binding.swiperefresh.isRefreshing = false
+        }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun setupRecyclerView() = binding.barListRecyclerView.apply {

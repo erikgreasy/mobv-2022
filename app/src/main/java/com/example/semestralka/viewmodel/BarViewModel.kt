@@ -12,26 +12,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BarViewModel(authViewModel: AuthViewModel, val application: Application): ViewModel() {
-//    val bars = MutableLiveData<MutableList<Bar>>()
+class BarViewModel(val authViewModel: AuthViewModel, val application: Application): ViewModel() {
     val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
 
-
     init {
-        loadBars(authViewModel)
+        loadBars()
     }
 
-    fun loadBars(authViewModel: AuthViewModel) {
+    fun loadBars() {
         viewModelScope.launch {
             val response = RetrofitInstance.api.getActiveBars(
                 authViewModel.loggedUser.value?.uid!!,
                 "Bearer " + authViewModel.loggedUser.value?.access!!
             )
 
-            Log.e("GREASY", response.toString())
+            Log.e("BAR VIEW MODEL LOADBARS", response.toString())
 
             if(!response.isSuccessful) {
-                Log.e("ASD", "neuspesny fetch barov")
+                Log.e("BAR VIEW MODEL LOADBARS", "neuspesny fetch barov")
                 if(response.code() == 401) {
                     val prefrencesData = PreferencesData(application.applicationContext)
                     val refreshToken = prefrencesData.getLoggedUser()?.refresh
@@ -77,58 +75,6 @@ class BarViewModel(authViewModel: AuthViewModel, val application: Application): 
         }
 
         return null
-    }
-
-//    private fun loadBars() {
-//        val retrofitBuilder = Retrofit.Builder()
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .baseUrl(BASE_URL)
-//            .build()
-//            .create(ApiInterface::class.java)
-//
-//        val retrofitData = retrofitBuilder.getData(Request())
-//
-//        retrofitData.enqueue(object : Callback<PubsData?> {
-//            override fun onResponse(call: Call<PubsData?>, response: Response<PubsData?>) {
-//                val responseBody = response.body()
-//
-//                val fetchedBars = mutableListOf<Bar>()
-//
-//                Log.e("TEST", responseBody.toString())
-//
-//                responseBody?.documents?.forEach {
-//                    if (it.tags.name != "") {
-//                        fetchedBars.add(
-//                            Bar(
-//                                it.tags.name
-//                            )
-//                        )
-//                    }
-//                }
-//                bars.value = fetchedBars
-//                Log.e("TEST", bars.toString())
-//            }
-//
-//            override fun onFailure(call: Call<PubsData?>, t: Throwable) {
-//
-//            }
-//        })
-////        val listOfBars =
-//
-////        _bars = listOfBars
-//    }
-
-//    fun order() {
-//        bars.value = bars.value?.sortedWith(compareBy({it.name}))?.toMutableList()
-//    }
-//        return bars.value?.find {
-//            it.name == name
-//        }
-//    }
-
-
-    private fun getMyData() {
-
     }
 }
 
