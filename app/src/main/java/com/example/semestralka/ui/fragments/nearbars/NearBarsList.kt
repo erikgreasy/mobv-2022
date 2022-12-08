@@ -15,6 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.ui.adapter.NearBarListAdapter
 import com.example.semestralka.databinding.FragmentNearBarsListBinding
+import com.example.semestralka.ui.viewmodel.AuthViewModel
+import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 import com.example.semestralka.ui.viewmodel.LocateViewModel
 import com.example.semestralka.ui.viewmodel.LocateViewModelFactory
 
@@ -25,7 +27,11 @@ class NearBarsList : Fragment() {
     private lateinit var nearBarListAdapter: NearBarListAdapter
 
     private val locateViewModel: LocateViewModel by activityViewModels {
-        LocateViewModelFactory(requireActivity())
+        LocateViewModelFactory(requireActivity(), authViewModel)
+    }
+
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory()
     }
 
     override fun onCreateView(
@@ -43,6 +49,16 @@ class NearBarsList : Fragment() {
         locateViewModel.bars.observe(viewLifecycleOwner, Observer {
             nearBarListAdapter.bars = it
         })
+
+        locateViewModel.nearBarToCheckin.observe(viewLifecycleOwner, Observer {
+            binding.choosenBarName.text = it?.name
+        })
+
+        binding.checkinBtn.setOnClickListener {
+            Log.e("checkin to", locateViewModel.nearBarToCheckin?.value.toString())
+            locateViewModel.checkinToBar()
+        }
+
 
         Log.e("ASD", locateViewModel.bars.value.toString())
 

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val locateViewModel: LocateViewModel by viewModels {
-        LocateViewModelFactory(this)
+        LocateViewModelFactory(this, authViewModel)
     }
 
     private lateinit var sharedPreferencesData: PreferencesData

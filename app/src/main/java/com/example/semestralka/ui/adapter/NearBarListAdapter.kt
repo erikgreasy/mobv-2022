@@ -68,6 +68,10 @@ class NearBarListAdapter() : RecyclerView.Adapter<NearBarListAdapter.NearBarList
                 MyLocation(bar.lat, bar.lon)
             )
 
+            nearBarListItem.setOnClickListener {
+                locateViewModel.nearBarToCheckin.value = bar
+            }
+
             barListItemDistance.text = "%.2f m".format(barDistance)
         }
     }
