@@ -30,6 +30,8 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
             Log.e("GREASY", response.toString())
 
             if(response.isSuccessful) {
+                Log.e("GREASY", response.body().toString())
+
                 friends.value = response.body()!!
             }
 

@@ -62,6 +62,16 @@ class FriendsListAdapter : RecyclerView.Adapter<FriendsListAdapter.FriendsListVi
         holder.binding.apply {
             val friend = friends[position]
             friendItemName.text = friend.user_name
+
+            if(friend.bar_name != null && friend.bar_id != null) {
+                friendItemBarName.text = friend.bar_name
+
+                friendItemWrapper.setOnClickListener {
+                    holder.itemView.findNavController().navigate(
+                        BarDetailFragmentDirections.actionBarDetail(friend.bar_id)
+                    )
+                }
+            }
         }
 
 //        holder.binding.friendItemName.setOnClickListener {
