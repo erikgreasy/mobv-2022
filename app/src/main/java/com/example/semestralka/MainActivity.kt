@@ -1,10 +1,15 @@
 package com.example.semestralka
 
-import android.content.Context
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -17,6 +22,10 @@ import com.example.semestralka.data.PreferencesData
 import com.example.semestralka.databinding.ActivityMainBinding
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
+import com.example.semestralka.viewmodel.LocateViewModel
+import com.example.semestralka.viewmodel.LocateViewModelFactory
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import kotlinx.coroutines.*
 import retrofit2.*
@@ -26,6 +35,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory()
+    }
+
+    private val locateViewModel: LocateViewModel by viewModels {
+        LocateViewModelFactory(this)
     }
 
     private lateinit var sharedPreferencesData: PreferencesData
@@ -100,5 +113,31 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         setupActionBarWithNavController(navController)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode != 1) {
+            // TODO HANDLE
+            return
+        }
+
+        if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Prosím skontrolujte povolenie prístupu k polohe v nastaveniach", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // permision granted
+        locateViewModel.getLocation()
     }
 }
