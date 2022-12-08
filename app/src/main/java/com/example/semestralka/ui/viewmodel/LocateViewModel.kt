@@ -65,7 +65,9 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
         }
     }
 
-    fun checkinToBar() {
+    fun checkinToBar(): LiveData<Boolean?> {
+        val success = MutableLiveData<Boolean?>(false)
+
         try {
             viewModelScope.launch {
                 val response = RetrofitInstance.api.checkinToBar(
@@ -87,13 +89,17 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
                     return@launch
                 }
 
-                Toast.makeText(activity, "Úspešne nahlásený", Toast.LENGTH_SHORT).show()
+                success.postValue(true)
+
+//                Toast.makeText(activity, "Úspešne nahlásený", Toast.LENGTH_SHORT).show()
             }
         } catch(e: IOException) {
             e.printStackTrace()
         } catch(e: java.lang.Exception) {
             e.printStackTrace()
         }
+
+        return success
     }
 
     @SuppressLint("MissingPermission")

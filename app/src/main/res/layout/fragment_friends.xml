@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Pridal som si ja"
+        android:text="Zobraziť pridaných mnou"
         />
 
     <androidx.recyclerview.widget.RecyclerView

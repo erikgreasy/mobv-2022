@@ -1,6 +1,8 @@
 package com.example.semestralka.ui.fragments.nearbars
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +59,31 @@ class NearBarsList : Fragment() {
 
         binding.checkinBtn.setOnClickListener {
             Log.e("checkin to", locateViewModel.nearBarToCheckin?.value.toString())
-            locateViewModel.checkinToBar()
+            locateViewModel.checkinToBar().observe(viewLifecycleOwner, Observer {
+                if(it == null) {
+                    return@Observer
+                }
+
+                if(!it) {
+                    return@Observer
+                }
+
+                binding.animationView.isVisible = true
+                binding.animationView.playAnimation()
+                binding.animationView.addAnimatorListener(object: Animator.AnimatorListener {
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
+                    override fun onAnimationCancel(animation: Animator?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+
+                    override fun onAnimationEnd(p0: Animator?) {
+                        binding.animationView.isVisible = false
+                    }
+                })
+            })
         }
 
 
