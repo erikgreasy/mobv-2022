@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.ui.friends
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.semestralka.BarApplication
+import com.example.semestralka.R
 import com.example.semestralka.databinding.FragmentAddFriendBinding
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory

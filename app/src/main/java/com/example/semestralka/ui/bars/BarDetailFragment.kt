@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.ui.bars
 
 import android.content.Intent
 import android.net.Uri
@@ -8,10 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.semestralka.BarApplication
 import com.example.semestralka.api.Bar
 import com.example.semestralka.databinding.FragmentBarDetailBinding
 import com.example.semestralka.viewmodel.AuthViewModel

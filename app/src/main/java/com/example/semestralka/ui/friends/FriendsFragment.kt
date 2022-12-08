@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.ui.friends
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.semestralka.adapter.BarListItemAdapter
+import com.example.semestralka.BarApplication
+import com.example.semestralka.R
 import com.example.semestralka.adapter.FriendsListAdapter
 import com.example.semestralka.databinding.FragmentFriendsBinding
-import com.example.semestralka.databinding.FragmentLoginBinding
 import com.example.semestralka.viewmodel.*
 
 class FriendsFragment : Fragment() {

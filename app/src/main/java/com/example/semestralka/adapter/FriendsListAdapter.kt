@@ -14,13 +14,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.semestralka.BarDetailFragmentDirections
-import com.example.semestralka.BarListFragmentDirections
 import com.example.semestralka.R
 import com.example.semestralka.api.User
 import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.databinding.FriendItemBinding
+import com.example.semestralka.ui.bars.BarDetailFragmentDirections
 import com.example.semestralka.viewmodel.BarViewModel
 
 class FriendsListAdapter : RecyclerView.Adapter<FriendsListAdapter.FriendsListViewHolder>() {

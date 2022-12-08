@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.ui.bars
 
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.semestralka.BarApplication
 import com.example.semestralka.adapter.BarListItemAdapter
 import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.databinding.FragmentBarListBinding

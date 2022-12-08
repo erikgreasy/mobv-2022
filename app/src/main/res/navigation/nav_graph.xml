@@ -34,12 +34,12 @@
     </fragment>
     <fragment
         android:id="@+id/barListFragment"
-        android:name="com.example.semestralka.BarListFragment"
+        android:name="com.example.semestralka.ui.bars.BarListFragment"
         android:label="fragment_bar_list"
         tools:layout="@layout/fragment_bar_list" />
     <fragment
         android:id="@+id/barDetailFragment"
-        android:name="com.example.semestralka.BarDetailFragment"
+        android:name="com.example.semestralka.ui.bars.BarDetailFragment"
         android:label="fragment_bar_detail"
         tools:layout="@layout/fragment_bar_detail" >
         <argument android:name="id"
@@ -47,12 +47,12 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.semestralka.LoginFragment"
+        android:name="com.example.semestralka.ui.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.semestralka.RegisterFragment"
+        android:name="com.example.semestralka.ui.auth.RegisterFragment"
         android:label="RegisterFragment" />
     <action
         android:id="@+id/action_login"
@@ -68,7 +68,7 @@
         app:destination="@id/barDetailFragment" />
     <fragment
         android:id="@+id/friendsFragment"
-        android:name="com.example.semestralka.FriendsFragment"
+        android:name="com.example.semestralka.ui.friends.FriendsFragment"
         android:label="fragment_friends"
         tools:layout="@layout/fragment_friends" />
     <action
@@ -76,12 +76,12 @@
         app:destination="@id/friendsFragment" />
     <fragment
         android:id="@+id/nearBarsListFragment"
-        android:name="com.example.semestralka.NearBarsList"
+        android:name="com.example.semestralka.ui.nearbars.NearBarsList"
         android:label="fragment_near_bars_list"
         tools:layout="@layout/fragment_near_bars_list" />
     <fragment
         android:id="@+id/addFriendFragment"
-        android:name="com.example.semestralka.AddFriendFragment"
+        android:name="com.example.semestralka.ui.friends.AddFriendFragment"
         android:label="fragment_add_friend"
         tools:layout="@layout/fragment_add_friend" />
     <action

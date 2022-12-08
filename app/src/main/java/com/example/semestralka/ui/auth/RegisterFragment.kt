@@ -1,4 +1,4 @@
-package com.example.semestralka
+package com.example.semestralka.ui.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.semestralka.databinding.FragmentLoginBinding
+import com.example.semestralka.R
 import com.example.semestralka.databinding.FragmentRegisterBinding
-import com.example.semestralka.service.PasswordHasher
 import com.example.semestralka.viewmodel.AuthViewModel
 import com.example.semestralka.viewmodel.AuthViewModelFactory
 
