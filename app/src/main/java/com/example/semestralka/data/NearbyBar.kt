@@ -9,7 +9,7 @@ data class NearbyBar(
     val type: String,
     val lat: Double,
     val lon: Double,
-//    val tags: Map<String, String>,
+    val tags: Map<String, String>,
 //    var distance: Double = 0.0
 ){
 

@@ -1,7 +1,9 @@
 package com.example.semestralka.ui.viewmodel
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import com.example.semestralka.api.RefreshData
@@ -14,6 +16,7 @@ import java.io.IOException
 
 class BarViewModel(val authViewModel: AuthViewModel, val application: Application): ViewModel() {
     val bars = MutableLiveData<List<com.example.semestralka.api.Bar>>(listOf())
+    val barDetail = MutableLiveData<NearbyBar?>(null)
 
     init {
         loadBars()
@@ -74,16 +77,39 @@ class BarViewModel(val authViewModel: AuthViewModel, val application: Applicatio
         }
     }
 
-    fun getBar(id: String): com.example.semestralka.api.Bar? {
-        val filteredBars = this.bars.value?.filter {
-            id == it.bar_id
-        }
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getBar(id: String) {
+        viewModelScope.launch {
+            Log.e("bar detail", "start request")
+            val q = "[out:json];node($id);out body;>;out skel;"
+            val response = RetrofitInstance.api.barDetail(q)
 
-        if(!filteredBars!!.isEmpty()) {
-            return filteredBars[0]
-        }
+            if(!response.isSuccessful) {
+                Log.e("bar detail", "request not successful")
 
-        return null
+                return@launch
+            }
+
+            if(response.body()!!.elements.isEmpty()) {
+                Log.e("bar detail", "elements empty")
+
+                return@launch
+            }
+
+            Log.e("bar detail", "request successful")
+
+            Log.e("bar detail", response.body().toString())
+            val bar = response.body()!!.elements.get(0)
+
+            barDetail.value = NearbyBar(
+                bar.id,
+                bar.tags.getOrDefault("name", ""),
+                bar.tags.getOrDefault("amenity", ""),
+                bar.lat,
+                bar.lon,
+                bar.tags
+            )
+        }
     }
 }
 

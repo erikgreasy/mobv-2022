@@ -55,7 +55,8 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
                         it.tags.get("name").toString(),
                         it.type,
                         it.lat,
-                        it.lon
+                        it.lon,
+                        it.tags
                     )
                 }
 
