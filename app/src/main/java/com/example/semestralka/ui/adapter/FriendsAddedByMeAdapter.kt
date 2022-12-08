@@ -22,8 +22,9 @@ import com.example.semestralka.databinding.FriendAddedByMeItemBinding
 import com.example.semestralka.databinding.FriendItemBinding
 import com.example.semestralka.ui.fragments.bars.BarDetailFragmentDirections
 import com.example.semestralka.ui.viewmodel.BarViewModel
+import com.example.semestralka.ui.viewmodel.FriendViewModel
 
-class FriendsAddedByMeAdapter : RecyclerView.Adapter<FriendsAddedByMeAdapter.FriendsAddedByMeViewHolder>() {
+class FriendsAddedByMeAdapter constructor(val friendViewModel: FriendViewModel) : RecyclerView.Adapter<FriendsAddedByMeAdapter.FriendsAddedByMeViewHolder>() {
 
     inner class FriendsAddedByMeViewHolder(val binding: FriendAddedByMeItemBinding) : ViewHolder(binding.root)
 
@@ -62,6 +63,10 @@ class FriendsAddedByMeAdapter : RecyclerView.Adapter<FriendsAddedByMeAdapter.Fri
         holder.binding.apply {
             val friend = friends[position]
             friendItemName.text = friend.user_name
+
+            deleteFriendBtn.setOnClickListener {
+                friendViewModel.deleteFriend(friend.user_name)
+            }
         }
 
 //        holder.binding.friendItemName.setOnClickListener {

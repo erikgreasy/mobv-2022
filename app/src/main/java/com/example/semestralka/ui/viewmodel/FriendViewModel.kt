@@ -62,6 +62,22 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
         }
     }
 
+    fun deleteFriend(friendUsername: String) {
+        viewModelScope.launch {
+            val response = RetrofitInstance.api.deleteFriend(
+                authViewModel.loggedUser.value?.uid!!,
+                "Bearer " + authViewModel.loggedUser.value?.access!!,
+                AddFriendRequest(friendUsername)
+            )
+
+            if(!response.isSuccessful) {
+                return@launch
+            }
+
+            loadFriendsAddedByMe()
+        }
+    }
+
     fun addFriend(friendUsername: String): LiveData<Boolean?> {
         val successful = MutableLiveData<Boolean?>(null)
 

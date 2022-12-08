@@ -64,6 +64,18 @@ interface FinalApi {
         token: String
     ): Response<List<User>>
 
+    @POST("contact/delete.php")
+    suspend fun deleteFriend(
+        @Header("x-user")
+        user: String,
+
+        @Header("authorization")
+        token: String,
+
+        @Body
+        friendData: AddFriendRequest
+    ): Response<Void>
+
     @POST("contact/message.php")
     suspend fun addFriend(
         @Header("x-user")

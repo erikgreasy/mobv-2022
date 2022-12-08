@@ -56,7 +56,7 @@ class FriendsAddedByMeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.friendsAddedByMeRecyclerView.apply {
-        friendsAddedBeMeAdapter = FriendsAddedByMeAdapter()
+        friendsAddedBeMeAdapter = FriendsAddedByMeAdapter(friendViewModel)
         adapter = friendsAddedBeMeAdapter
         layoutManager = LinearLayoutManager(this.context)
     }
