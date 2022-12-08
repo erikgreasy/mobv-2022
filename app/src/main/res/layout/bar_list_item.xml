@@ -8,6 +8,7 @@
     android:paddingBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/bar_list_item_name"
@@ -15,7 +16,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Placeholder" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Placeholder"
+        android:textSize="20dp"/>
+
 
     <TextView
         android:id="@+id/bar_list_item_users_count"
@@ -24,6 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="28"
+        android:textSize="25dp"
+
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
