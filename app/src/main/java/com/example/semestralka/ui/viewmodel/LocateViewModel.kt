@@ -101,7 +101,6 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
         fusedLocationProviderClient.lastLocation?.addOnSuccessListener {
             if(it == null) {
                 Toast.makeText(activity, "Sorry cant get location", Toast.LENGTH_SHORT).show()
-
             }
 
             it.apply {

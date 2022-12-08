@@ -12,10 +12,14 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semestralka.BarApplication
 import com.example.semestralka.api.Bar
+import com.example.semestralka.data.BarDetailListItem
 import com.example.semestralka.data.NearbyBar
 import com.example.semestralka.databinding.FragmentBarDetailBinding
+import com.example.semestralka.ui.adapter.BarDetailListAdapter
+import com.example.semestralka.ui.adapter.BarListItemAdapter
 import com.example.semestralka.ui.viewmodel.AuthViewModel
 import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 import com.example.semestralka.ui.viewmodel.BarViewModel
@@ -30,6 +34,8 @@ class BarDetailFragment : Fragment() {
     private val navigationArgs: BarDetailFragmentArgs by navArgs()
     lateinit var bar: NearbyBar
 //    private var barName: String = ""
+
+    lateinit var barDetailListAdapter: BarDetailListAdapter
 
     private val barViewModel: BarViewModel by activityViewModels {
         BarViewModelFactory(
@@ -69,13 +75,19 @@ class BarDetailFragment : Fragment() {
 
         val barId = navigationArgs.id
 
+        barViewModel.barDetail.value = null
         barViewModel.getBar(barId)
 
         barViewModel.barDetail.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 bar = it
                 bind(bar)
+
+                barDetailListAdapter.data = barViewModel.barDetail.value?.tags!!.map {
+                    BarDetailListItem(it.key, it.value)
+                }
             }
+
         })
     }
 
@@ -84,6 +96,15 @@ class BarDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentBarDetailBinding.inflate(inflater, container, false)
+
+        setupRecyclerView()
+
         return binding.root
+    }
+
+    private fun setupRecyclerView() = binding.barDetailRecyclerView.apply {
+        barDetailListAdapter = BarDetailListAdapter()
+        adapter = barDetailListAdapter
+        layoutManager = LinearLayoutManager(this.context)
     }
 }

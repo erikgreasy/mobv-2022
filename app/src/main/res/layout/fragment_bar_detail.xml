@@ -18,11 +18,22 @@
         tools:text="Nazov podniku"
         />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bar_detail_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/bar_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
     <Button
         android:id="@+id/show_on_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/bar_name"
+        app:layout_constraintTop_toBottomOf="@+id/bar_detail_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Zobraziť na mape"
