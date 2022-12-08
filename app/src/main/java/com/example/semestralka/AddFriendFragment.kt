@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.semestralka.databinding.FragmentAddFriendBinding
 import com.example.semestralka.viewmodel.AuthViewModel
@@ -39,10 +41,26 @@ class AddFriendFragment : Fragment() {
             val friendUsername = binding.usernameInput.text.toString()
             Log.e("ADD FRIEND", friendUsername)
 
-            // TODO make request to add friend
-            friendViewModel.addFriend(friendUsername)
+            binding.usernameInputWrapper.error = null
 
-            findNavController().navigate(R.id.action_friends)
+            friendViewModel.addFriend(friendUsername).observe(viewLifecycleOwner, Observer {
+                if(it == null) {
+                    return@Observer
+                }
+
+                if(!it) {
+                    binding.usernameInputWrapper.error = "Nepodarilo sa pridať používateľa so zadaným menom"
+                    return@Observer
+                }
+
+                Toast.makeText(
+                    requireContext(),
+                    "Priateľ pridaný",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                findNavController().navigate(R.id.action_friends)
+            })
         }
 
         return binding.root
