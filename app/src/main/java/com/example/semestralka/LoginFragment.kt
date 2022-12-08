@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -71,15 +72,16 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if(!authViewModel.login(username, password)) {
-                binding.passwordInputWrapper.error = "Zadané údaje sú nesprávne"
-                error = true
-                return@setOnClickListener
-            }
+            authViewModel.login(username, password).observe(requireActivity(), Observer {
+                if(it == null) {
+                    return@Observer
+                }
 
-            Log.e("SUCCESS GREASY TRY", authViewModel.loggedUser.toString())
-
-            // TODO: refactor this because now the process in couroutine doesnt work correclty showing this progressbar
+                if(!it) {
+                    binding.passwordInputWrapper.error = "Zadané údaje sú nesprávne"
+                    return@Observer
+                }
+            })
         }
 
         return binding.root

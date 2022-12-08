@@ -2,10 +2,7 @@ package com.example.semestralka.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.example.semestralka.R
 import com.example.semestralka.api.RetrofitInstance
@@ -21,47 +18,63 @@ class AuthViewModel: ViewModel() {
     val isLoggedIn = MutableLiveData<Boolean>(false)
     val passwordHasher = PasswordHasher()
 
-    fun login(username: String, password: String): Boolean = runBlocking{
-        val hashedPassword = passwordHasher.hashPassword(password)
-        val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
+    fun login(username: String, password: String): LiveData<Boolean?> {
+        val success = MutableLiveData<Boolean?>(null)
 
-        Log.e("GREASY", response.toString())
-        Log.e("GREASY", response.body().toString())
+        viewModelScope.launch {
+            val hashedPassword = passwordHasher.hashPassword(password)
+            val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
 
-        if(!response.isSuccessful) {
-            false
+            Log.e("GREASY", response.toString())
+            Log.e("GREASY", response.body().toString())
+
+            if(!response.isSuccessful) {
+                success.postValue(false)
+                return@launch
+            }
+            val responseBody = response.body()
+
+            if(!didUserAuthenticate(responseBody!!)) {
+                success.postValue(false)
+                return@launch
+            }
+
+            loggedUser.value = responseBody!!
+            isLoggedIn.value = true
+
+            success.postValue(true)
         }
-        val responseBody = response.body()
 
-        if(!didUserAuthenticate(responseBody!!)) {
-            false
-        }
-
-        loggedUser.value = responseBody!!
-        isLoggedIn.value = true
-
-        true
+        return success
     }
 
-    fun register(username: String, password: String): Boolean = runBlocking{
-        val hashedPassword = passwordHasher.hashPassword(password)
-        val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
+    fun register(username: String, password: String): LiveData<Boolean?> {
+        val success = MutableLiveData<Boolean?>(null)
 
-        if(!response.isSuccessful) {
-            false
+        viewModelScope.launch {
+            val hashedPassword = passwordHasher.hashPassword(password)
+            val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
+
+            if(!response.isSuccessful) {
+                success.postValue(false)
+                return@launch
+            }
+
+            val responseBody = response.body()
+
+            if(!didUserAuthenticate(responseBody!!)) {
+                success.postValue(false)
+                return@launch
+            }
+
+            Log.e("PREBEHLO USPESNE", responseBody.toString())
+            loggedUser.value = responseBody!!
+            isLoggedIn.value = true
+
+            success.postValue(true)
         }
 
-        val responseBody = response.body()
-
-        if(!didUserAuthenticate(responseBody!!)) {
-            false
-        }
-
-        Log.e("PREBEHLO USPESNE", responseBody.toString())
-        loggedUser.value = responseBody!!
-        isLoggedIn.value = true
-
-        true
+        return success
     }
 
     fun logout() {
