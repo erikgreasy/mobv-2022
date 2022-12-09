@@ -24,10 +24,7 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
         Log.e("FRINED VIEW MODEL", "LOADING FRIENDS")
 
         viewModelScope.launch {
-            val response = RetrofitInstance.api.getFriends(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!
-            )
+            val response = RetrofitInstance.getInstance(application).api.getFriends()
 
             Log.e("GREASY", response.toString())
 
@@ -45,10 +42,7 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
         Log.e("FRINED VIEW MODEL", "LOADING FRIENDS added by me")
 
         viewModelScope.launch {
-            val response = RetrofitInstance.api.getFriendsAddedByMe(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!
-            )
+            val response = RetrofitInstance.getInstance(application).api.getFriendsAddedByMe()
 
             Log.e("get friends added by me", response.toString())
 
@@ -64,9 +58,7 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
 
     fun deleteFriend(friendUsername: String) {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.deleteFriend(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!,
+            val response = RetrofitInstance.getInstance(application).api.deleteFriend(
                 AddFriendRequest(friendUsername)
             )
 
@@ -84,9 +76,7 @@ class FriendViewModel(val authViewModel: AuthViewModel, val application: Applica
         viewModelScope.launch {
 //            loading.value = true
 
-            val response = RetrofitInstance.api.addFriend(
-                authViewModel.loggedUser.value?.uid!!,
-                "Bearer " + authViewModel.loggedUser.value?.access!!,
+            val response = RetrofitInstance.getInstance(application).api.addFriend(
                 AddFriendRequest(friendUsername)
             )
 

@@ -2,7 +2,7 @@ package com.example.semestralka.data
 
 import android.content.Context
 
-class PreferencesData(val context: Context) {
+class PreferencesData private constructor(val context: Context) {
     val sharedObject = context.getSharedPreferences("mobvData", Context.MODE_PRIVATE)
 
     fun get(key: String): String? {
@@ -41,5 +41,15 @@ class PreferencesData(val context: Context) {
             "loggedUser.access" to userData.access,
             "loggedUser.refresh" to userData.refresh
         ))
+    }
+    companion object {
+        @Volatile
+        private var INSTANCE: PreferencesData? = null
+
+        fun getInstance(context: Context): PreferencesData =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE
+                    ?: PreferencesData(context).also { INSTANCE = it }
+            }
     }
 }

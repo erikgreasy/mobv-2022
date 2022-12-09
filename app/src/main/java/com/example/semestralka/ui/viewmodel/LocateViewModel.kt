@@ -45,7 +45,7 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
 
             val q = "[out:json];node(around:250,$lat,$lon);(node(around:250)[\"amenity\"~\"^pub$|^bar$|^restaurant$|^cafe$|^fast_food$|^stripclub$|^nightclub$\"];);out body;>;out skel;"
 
-            val response = RetrofitInstance.api.barNearby(q)
+            val response = RetrofitInstance.getInstance(activity).api.barNearby(q)
 
             Log.e("locate model", response.toString())
 
@@ -77,9 +77,7 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
 
         try {
             viewModelScope.launch {
-                val response = RetrofitInstance.api.checkinToBar(
-                    authViewModel.loggedUser.value?.uid!!,
-                    "Bearer " + authViewModel.loggedUser.value?.access!!,
+                val response = RetrofitInstance.getInstance(activity).api.checkinToBar(
                     CheckinBarRequest(
                         nearBarToCheckin.value!!.id,
                         nearBarToCheckin.value!!.name,

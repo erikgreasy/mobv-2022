@@ -30,7 +30,9 @@ class AddFriendFragment : Fragment() {
     }
 
     private val authViewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            (activity?.application as BarApplication)
+        )
     }
 
     override fun onCreateView(

@@ -30,7 +30,9 @@ import retrofit2.*
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private val authViewModel: AuthViewModel by viewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            application
+        )
     }
 
     private val locateViewModel: LocateViewModel by viewModels {
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedPreferencesData = PreferencesData(applicationContext)
+        sharedPreferencesData = PreferencesData.getInstance(applicationContext)
 
         val loggedUser = sharedPreferencesData.getLoggedUser()
 

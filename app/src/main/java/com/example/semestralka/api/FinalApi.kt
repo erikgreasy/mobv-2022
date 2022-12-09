@@ -8,13 +8,7 @@ import retrofit2.http.*
 interface FinalApi {
 
     @GET("bar/list.php")
-    suspend fun getActiveBars(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String
-    ): Response<List<Bar>>
+    suspend fun getActiveBars(): Response<List<Bar>>
 
     @POST("user/login.php")
     suspend fun login(
@@ -24,9 +18,6 @@ interface FinalApi {
 
     @POST("user/refresh.php")
     suspend fun refresh(
-        @Header("x-user")
-        user: String,
-
         @Body
         refreshData: RefreshData
     ): Response<UserResponse>
@@ -43,59 +34,29 @@ interface FinalApi {
      * That way i can see where they are.
      */
     @GET("contact/list.php")
-    suspend fun getFriends(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String
-    ): Response<List<User>>
+    suspend fun getFriends(): Response<List<User>>
 
     /**
      * List of friends that I added.
      * They can see my position and i can manage this list.
      */
     @GET("contact/friends.php")
-    suspend fun getFriendsAddedByMe(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String
-    ): Response<List<User>>
+    suspend fun getFriendsAddedByMe(): Response<List<User>>
 
     @POST("contact/delete.php")
     suspend fun deleteFriend(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String,
-
         @Body
         friendData: AddFriendRequest
     ): Response<Void>
 
     @POST("contact/message.php")
     suspend fun addFriend(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String,
-
         @Body
         friendData: AddFriendRequest
     ): Response<Void>
 
     @POST("bar/message.php")
     suspend fun checkinToBar(
-        @Header("x-user")
-        user: String,
-
-        @Header("authorization")
-        token: String,
-
         @Body
         checkingBarData: CheckinBarRequest
     ): Response<Void>

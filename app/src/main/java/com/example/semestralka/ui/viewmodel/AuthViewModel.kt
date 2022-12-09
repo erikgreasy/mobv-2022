@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
-class AuthViewModel: ViewModel() {
+class AuthViewModel(val application: Application): ViewModel() {
     val loggedUser = MutableLiveData<UserResponse?>(null)
     val isLoggedIn = MutableLiveData<Boolean>(false)
     val passwordHasher = PasswordHasher()
@@ -26,7 +26,7 @@ class AuthViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val hashedPassword = passwordHasher.hashPassword(password)
-                val response = RetrofitInstance.api.login(UserRequest(username, hashedPassword))
+                val response = RetrofitInstance.getInstance(application).api.login(UserRequest(username, hashedPassword))
 
                 Log.e("GREASY", response.toString())
                 Log.e("GREASY", response.body().toString())
@@ -64,7 +64,7 @@ class AuthViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val hashedPassword = passwordHasher.hashPassword(password)
-                val response = RetrofitInstance.api.register(UserRequest(username, hashedPassword))
+                val response = RetrofitInstance.getInstance(application).api.register(UserRequest(username, hashedPassword))
 
                 if(!response.isSuccessful) {
                     success.postValue(false)
@@ -106,11 +106,11 @@ class AuthViewModel: ViewModel() {
     }
 }
 
-class AuthViewModelFactory() : ViewModelProvider.Factory {
+class AuthViewModelFactory(val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AuthViewModel() as T
+            return AuthViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

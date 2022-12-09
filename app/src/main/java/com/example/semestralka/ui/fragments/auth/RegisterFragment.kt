@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.example.semestralka.BarApplication
 import com.example.semestralka.R
 import com.example.semestralka.databinding.FragmentRegisterBinding
 import com.example.semestralka.ui.viewmodel.AuthViewModel
@@ -18,7 +19,9 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val authViewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            (activity?.application as BarApplication)
+        )
     }
 
     override fun onCreateView(
