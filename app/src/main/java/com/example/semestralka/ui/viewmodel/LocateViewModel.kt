@@ -18,6 +18,7 @@ import com.example.semestralka.api.RetrofitInstance
 import com.example.semestralka.data.Bar
 import com.example.semestralka.data.MyLocation
 import com.example.semestralka.data.NearbyBar
+import com.example.semestralka.service.DistanceCounter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.launch
@@ -49,7 +50,13 @@ class LocateViewModel(val activity: Activity, val authViewModel: AuthViewModel):
             Log.e("locate model", response.toString())
 
             if(response.isSuccessful) {
-                bars.value = response.body()?.elements?.map {
+                val ordered = response.body()?.elements?.sortedBy {
+                    DistanceCounter().countDistance(
+                        location!!,
+                        MyLocation(it.lat, it.lon)
+                    )
+                }
+                bars.value = ordered?.map {
                     NearbyBar(
                         it.id,
                         it.tags.get("name").toString(),
