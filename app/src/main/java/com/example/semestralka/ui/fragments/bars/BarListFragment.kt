@@ -43,6 +43,7 @@ class BarListFragment : Fragment() {
 
         setupRecyclerView()
 
+        barViewModel.loadBars()
 
         barListItemAdapter.bars = barViewModel.bars.value!!
 
