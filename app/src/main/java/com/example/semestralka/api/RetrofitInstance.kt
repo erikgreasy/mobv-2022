@@ -3,6 +3,9 @@ package com.example.semestralka.api
 import android.content.Context
 import android.util.Log
 import com.example.semestralka.data.PreferencesData
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +17,7 @@ class RetrofitInstance private constructor(context: Context) {
 
     val client = OkHttpClient.Builder()
         .readTimeout(60, TimeUnit.SECONDS)
+        .authenticator(TokenAuthenticator(context))
         .addInterceptor { chain ->
             val original = chain.request()
 
@@ -25,13 +29,6 @@ class RetrofitInstance private constructor(context: Context) {
             val request = requestBuilder.build()
 
             val response = chain.proceed(request)
-
-            if(response.code == 401) {
-//                api.refresh()
-            }
-            if(response.code == 500) {
-                Log.e("POKUS O INTERCEPTOR", "mame status 500")
-            }
 
             response
         }

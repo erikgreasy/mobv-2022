@@ -33,36 +33,8 @@ class BarViewModel(val authViewModel: AuthViewModel, val application: BarApplica
 
                 if(!response.isSuccessful) {
                     Log.e("BAR VIEW MODEL LOADBARS", "neuspesny fetch barov")
+                    authViewModel.logout()
                     return@launch
-//                    if(response.code() == 401) {
-//                        val prefrencesData = PreferencesData(application.applicationContext)
-//                        val refreshToken = prefrencesData.getLoggedUser()?.refresh
-//
-//                        if(refreshToken == null) {
-//                            return@launch
-//                        }
-//
-//                        val refreshResponse = RetrofitInstance.api.refresh(
-//                            authViewModel.loggedUser.value?.uid!!,
-//                            RefreshData(
-//                                refreshToken
-//                            )
-//                        )
-//
-//                        if(refreshResponse.isSuccessful) {
-//                            prefrencesData.setLoggedUser(LoggedUser(
-//                                refreshResponse.body()?.uid!!,
-//                                refreshResponse.body()?.access!!,
-//                                refreshResponse.body()?.refresh!!,
-//                            ))
-//                        } else {
-//                            Log.e("ASD", "nepodarilo sa refreshnut")
-//                            Log.e("ASD", refreshResponse.toString())
-//                            authViewModel.logout()
-//                        }
-//
-//                        return@launch
-//                    }
                 }
 
                 bars.value = response.body()!!
