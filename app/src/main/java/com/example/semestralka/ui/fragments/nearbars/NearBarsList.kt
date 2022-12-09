@@ -16,6 +16,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.semestralka.BarApplication
 import com.example.semestralka.ui.adapter.NearBarListAdapter
 import com.example.semestralka.databinding.FragmentNearBarsListBinding
 import com.example.semestralka.ui.viewmodel.AuthViewModel
@@ -34,7 +35,9 @@ class NearBarsList : Fragment() {
     }
 
     private val authViewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            (activity?.application as BarApplication)
+        )
     }
 
     override fun onCreateView(

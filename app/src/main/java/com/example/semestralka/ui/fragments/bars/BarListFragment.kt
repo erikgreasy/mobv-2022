@@ -30,7 +30,9 @@ class BarListFragment : Fragment() {
     private var _binding: FragmentBarListBinding? = null
     private val binding get() = _binding!!
     private val authViewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            (activity?.application as BarApplication)
+        )
     }
 
     override fun onCreateView(

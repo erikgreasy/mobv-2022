@@ -45,7 +45,9 @@ class BarDetailFragment : Fragment() {
     }
 
     private val authViewModel: AuthViewModel by activityViewModels {
-        AuthViewModelFactory()
+        AuthViewModelFactory(
+            (activity?.application as BarApplication)
+        )
     }
 
     private var _binding: FragmentBarDetailBinding? = null
