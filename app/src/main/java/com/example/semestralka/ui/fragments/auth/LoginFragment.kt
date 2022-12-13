@@ -1,5 +1,6 @@
 package com.example.semestralka.ui.fragments.auth
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -53,12 +54,12 @@ class LoginFragment : Fragment() {
             var error = false
 
             if(username.trim() == "") {
-                binding.usernameInputWrapper.error = "Pole je povinné"
+                binding.usernameInputWrapper.error = requireContext().getString(R.string.required_validation)
                 error = true
             }
 
             if(password.trim() == "") {
-                binding.passwordInputWrapper.error = "Pole je povinné"
+                binding.passwordInputWrapper.error = requireContext().getString(R.string.required_validation)
                 error = true
             }
 
@@ -74,7 +75,7 @@ class LoginFragment : Fragment() {
                 }
 
                 if(!it) {
-                    binding.passwordInputWrapper.error = "Zadané údaje sú nesprávne"
+                    binding.passwordInputWrapper.error = requireContext().getString(R.string.incorrect_data_validation)
                 }
 
                 binding.progressBar.isVisible = false

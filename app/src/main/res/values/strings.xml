@@ -1,5 +1,48 @@
 <resources>
     <string name="app_name">Semestralka</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login_heading">Prihlásenie</string>
+    <string name="login_subheading">Pre pokračovanie vyplňte prihlasovacie údaje</string>
+    <string name="login_name_prompt">Vaše prihlasovacie meno</string>
+    <string name="login_password_prompt">Vaše heslo</string>
+    <string name="login_submit_btn">Prihlásiť</string>
+    <string name="login_to_register_action">alebo sa registrujte</string>
+
+    <string name="register_heading">Registrácia</string>
+    <string name="register_subheading">Pre registráciu vyplňte nasledujúce polia</string>
+    <string name="register_name_prompt">Prihlasovacie meno</string>
+    <string name="register_password_prompt">Heslo</string>
+    <string name="register_password_repeat_prompt">Zopakujte heslo</string>
+    <string name="register_submit_btn">Registrovať</string>
+    <string name="register_to_login_action">Už máte účet? Priháste sa</string>
+
+    <string name="bar_detail_show_on_map">Zobraziť na mape</string>
+
+    <string name="friends_added_by_me_btn">Zobraziť pridaných mnou</string>
+    <string name="friends_add">Pridať</string>
+
+    <string name="add_friend_heading">Pridať priateľa</string>
+    <string name="add_friend_name">Meno priateľa</string>
+    <string name="add_friend_added">Priateľ pridaný</string>
+    <string name="add_friend_cannot_add">Nepodarilo sa pridať používateľa so zadaným menom</string>
+
+
+    <string name="friends_added_by_me_show_added_btn">Zobraziť tých čo si pridali mňa</string>
+
+    <string name="delete">Odstrániť</string>
+
+    <string name="near_bars_checkin">Nahlásiť sa</string>
+
+
+    <string name="required_validation">Pole je povinné</string>
+    <string name="incorrect_data_validation">Zadané údaje sú nesprávne</string>
+    <string name="passwords_dont_match_validation">Heslo sa nezhoduje</string>
+    <string name="username_exists_validation">Zadané meno už evidujeme</string>
+
+    <string name="bottom_nav_barlist">Aktuálne podniky</string>
+    <string name="bottom_nav_friends">Priatelia</string>
+    <string name="bottom_nav_nearbars">V okolí</string>
+    <string name="bottom_nav_logout">Logout</string>
+
 </resources>

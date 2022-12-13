@@ -46,17 +46,17 @@ class RegisterFragment : Fragment() {
             var error = false
 
             if(username.trim() == "") {
-                binding.usernameInputWrapper.error = "Pole je povinné"
+                binding.usernameInputWrapper.error = requireContext().getString(R.string.incorrect_data_validation)
                 error = true
             }
 
             if(password.trim() == "") {
-                binding.passwordInputWrapper.error = "Pole je povinné"
+                binding.passwordInputWrapper.error = requireContext().getString(R.string.incorrect_data_validation)
                 error = true
             }
 
             if(passwordConfirm.trim() == "") {
-                binding.passwordConfirmInputWrapper.error = "Pole je povinné"
+                binding.passwordConfirmInputWrapper.error = requireContext().getString(R.string.incorrect_data_validation)
                 error = true
             }
 
@@ -66,7 +66,7 @@ class RegisterFragment : Fragment() {
 
             // check password confirmation
             if(password != passwordConfirm) {
-                binding.passwordConfirmInputWrapper.error = "Heslo sa nezhoduje"
+                binding.passwordConfirmInputWrapper.error = requireContext().getString(R.string.passwords_dont_match_validation)
                 error = true
             }
 
@@ -83,7 +83,7 @@ class RegisterFragment : Fragment() {
                 }
 
                 if(!it) {
-                    binding.usernameInputWrapper.error = "Zadané meno už evidujeme"
+                    binding.usernameInputWrapper.error = requireContext().getString(R.string.username_exists_validation)
                     return@Observer
                 }
             })

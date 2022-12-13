@@ -36,6 +36,6 @@
         app:layout_constraintTop_toBottomOf="@+id/bar_detail_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Zobraziť na mape"
+        android:text="@string/bar_detail_show_on_map"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

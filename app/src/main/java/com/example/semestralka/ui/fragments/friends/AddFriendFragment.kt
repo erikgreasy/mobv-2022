@@ -53,13 +53,13 @@ class AddFriendFragment : Fragment() {
                 }
 
                 if(!it) {
-                    binding.usernameInputWrapper.error = "Nepodarilo sa pridať používateľa so zadaným menom"
+                    binding.usernameInputWrapper.error = requireContext().getString(R.string.add_friend_cannot_add)
                     return@Observer
                 }
 
                 Toast.makeText(
                     requireContext(),
-                    "Priateľ pridaný",
+                    requireContext().getString(R.string.add_friend_added),
                     Toast.LENGTH_SHORT
                 ).show()
 

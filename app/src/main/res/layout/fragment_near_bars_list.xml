@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Nahlásiť sa"
+        android:text="@string/near_bars_checkin"
         android:layout_margin="10dp"
         />
 

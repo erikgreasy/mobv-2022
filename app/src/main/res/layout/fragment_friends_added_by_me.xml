@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Zobraziť tých čo si pridali mňa"
+        android:text="@string/friends_added_by_me_show_added_btn"
         />
 
     <androidx.recyclerview.widget.RecyclerView
