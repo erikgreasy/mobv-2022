@@ -20,6 +20,7 @@ import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.databinding.FriendItemBinding
 import com.example.semestralka.ui.fragments.bars.BarDetailFragmentDirections
+import com.example.semestralka.ui.fragments.friends.FriendsFragmentDirections
 import com.example.semestralka.ui.viewmodel.BarViewModel
 
 class FriendsListAdapter : RecyclerView.Adapter<FriendsListAdapter.FriendsListViewHolder>() {
@@ -67,7 +68,7 @@ class FriendsListAdapter : RecyclerView.Adapter<FriendsListAdapter.FriendsListVi
 
                 friendItemWrapper.setOnClickListener {
                     holder.itemView.findNavController().navigate(
-                        BarDetailFragmentDirections.actionBarDetail(friend.bar_id)
+                        FriendsFragmentDirections.actionFriendsFragmentToBarDetailFragment(friend.bar_id)
                     )
                 }
             }

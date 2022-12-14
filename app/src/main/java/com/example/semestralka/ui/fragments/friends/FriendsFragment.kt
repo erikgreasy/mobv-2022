@@ -53,11 +53,15 @@ class FriendsFragment : Fragment() {
         })
 
         binding.usersIAddedBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_friends_added_by_me)
+            findNavController().navigate(
+                FriendsFragmentDirections.actionFriendsFragmentToFriendsAddedByMeFragment()
+            )
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_add_friend)
+            findNavController().navigate(
+                FriendsFragmentDirections.actionFriendsFragmentToAddFriendFragment()
+            )
         }
 
         return binding.root

@@ -42,7 +42,9 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.registerLink.setOnClickListener {
-            it.findNavController().navigate(R.id.action_register)
+            it.findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+            )
         }
 
         binding.submitButton.setOnClickListener {

@@ -13,6 +13,7 @@ import com.example.semestralka.databinding.FragmentFriendsAddedByMeBinding
 import com.example.semestralka.databinding.FragmentFriendsBinding
 import com.example.semestralka.ui.adapter.FriendsAddedByMeAdapter
 import com.example.semestralka.ui.adapter.FriendsListAdapter
+import com.example.semestralka.ui.fragments.friends.FriendsFragmentDirections
 import com.example.semestralka.ui.viewmodel.AuthViewModel
 import com.example.semestralka.ui.viewmodel.AuthViewModelFactory
 import com.example.semestralka.ui.viewmodel.FriendViewModel
@@ -51,7 +52,9 @@ class FriendsAddedByMeFragment : Fragment() {
         })
 
         binding.friendsBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_friends)
+            findNavController().navigate(
+                FriendsAddedByMeFragmentDirections.actionFriendsAddedByMeFragmentToFriendsFragment()
+            )
         }
 
         return binding.root

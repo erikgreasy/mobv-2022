@@ -18,6 +18,7 @@ import com.example.semestralka.R
 import com.example.semestralka.data.Bar
 import com.example.semestralka.databinding.BarListItemBinding
 import com.example.semestralka.ui.fragments.bars.BarDetailFragmentDirections
+import com.example.semestralka.ui.fragments.bars.BarListFragmentDirections
 import com.example.semestralka.ui.viewmodel.BarViewModel
 
 class BarListItemAdapter : RecyclerView.Adapter<BarListItemAdapter.BarListViewHolder>() {
@@ -63,7 +64,7 @@ class BarListItemAdapter : RecyclerView.Adapter<BarListItemAdapter.BarListViewHo
         }
 
         holder.binding.barListItemName.setOnClickListener {
-            val action = BarDetailFragmentDirections.actionBarDetail(bars[position].bar_id)
+            val action = BarListFragmentDirections.actionBarListFragmentToBarDetailFragment(bars[position].bar_id)
             holder.itemView.findNavController().navigate(action)
         }
     }
